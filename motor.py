@@ -31,8 +31,9 @@ def getBinaryList(stateList: list[tuple[int]]):
             raise Exception("Invalid motor state in input list.")
     motorValues = [val for state in stateList for val in state]  # convert to flat list
     # see shield schematic [M3 and M4 were replaced on my shield] (http://wiki.sunfounder.cc/images/f/ff/L293D_schematic.png)
-    shieldConfig = (5, 7, 4, 3, 1, 0, 2, 6)
-    return [motorValues[i] for i in shieldConfig]
+    # oldShieldConfig = (5, 7, 4, 3, 1, 0, 2, 6) # shield with yellow light
+    newShieldConfig = (4, 7, 5, 3, 1, 0, 2, 6) # shield with green light
+    return [motorValues[i] for i in newShieldConfig]
 
 
 # write data to shift register
