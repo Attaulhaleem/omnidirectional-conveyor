@@ -6,6 +6,7 @@ SQRT_3 = sqrt(3)
 HEADING_FONT = "Inter Medium"
 BODY_FONT = "Inter Regular"
 
+# app elements
 app = App(title="Omniveyor", bg=(250, 249, 246))
 # app.tk.state("zoomed")
 sliders_box = Box(app, width="fill", align="top")
