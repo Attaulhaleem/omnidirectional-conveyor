@@ -6,14 +6,14 @@ HEADING_FONT = "Inter Medium"
 BODY_FONT = "Inter Regular"
 
 app = App(title="Omniveyor", bg=(250, 249, 246))
-app.tk.state("zoomed")
+# app.tk.state("zoomed")
 sliders_box = Box(app, width="fill", align="top")
 config_box = Box(app, width="fill", align="top", border=True)
 image_box = Box(app, width="fill", height="fill", align="bottom")
 drawing = Drawing(image_box, width="fill", height="fill")
 
-hPos = []
-hInd = []
+hPos = list(tuple())
+hInd = list(tuple())
 
 
 def drawHexagons():
@@ -56,8 +56,8 @@ def drawHexagons():
                     (X + SQRT_3 * L, Y + 1.5 * L),
                     (X + SQRT_3 * L, Y + 0.5 * L),
                 ]
-                hInd.append([col if row % 2 == ODD_OFFSET else col - 0.5, row])
-                hPos.append([floor(X + 0.5 * SQRT_3 * L), floor(Y + 0.5 * SQRT_3 * L)])
+                hInd.append((col if row % 2 == ODD_OFFSET else col - 0.5, row))
+                hPos.append((floor(X + 0.5 * SQRT_3 * L), floor(Y + L)))
 
             drawing.polygon(
                 coordinates,
@@ -70,7 +70,23 @@ def drawHexagons():
 
 
 def tracePath(event_data):
-    print("mouse position =", event_data.x, event_data.y)
+    cursor = (event_data.x, event_data.y)
+    ind = findNearest(cursor, hPos)
+    print("Clicked Hexagon: ", hPos[ind][0], hPos[ind][1])
+
+
+def findNearest(cursor, point_list):
+    if len(cursor) != 2:
+        raise Exception("Cursor value must be a set of 2 integers.")
+    for point in point_list:
+        if len(point) != 2:
+            raise Exception("List must contain sets of 2 integers only.")
+    dists = list()
+    for point in point_list:
+        dx = point[0] - cursor[0]
+        dy = point[1] - cursor[1]
+        dists.append(dx**2 + dy**2)
+    return dists.index(min(dists))
 
 
 Text(sliders_box, text="Size", font=HEADING_FONT, align="left")
