@@ -1,6 +1,7 @@
 from guizero import App, Box, ButtonGroup, Drawing, PushButton, Slider, Text
 from math import sqrt, floor
 
+# CONSTANTS
 SQRT_3 = sqrt(3)
 HEADING_FONT = "Inter Medium"
 BODY_FONT = "Inter Regular"
