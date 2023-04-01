@@ -5,7 +5,7 @@ import hexagon
 
 # called when button pressed, draw hexagons on screen
 def drawHexagons():
-    drawing.clear()
+    hex_drawing.clear()
     length = len_slider.value
     rows = row_slider.value
     cols = col_slider.value
@@ -14,7 +14,7 @@ def drawHexagons():
     fill_color = (red_slider.value, green_slider.value, blue_slider.value)
     drawingPoints = hexagon.generate(length, rows, cols, flat_top, odd_offset)
     for pts in drawingPoints:
-        drawing.polygon(
+        hex_drawing.polygon(
             pts,
             color=fill_color,
             outline=True,
@@ -46,7 +46,7 @@ app = App(title="Omniveyor", bg=BG_COLOR)
 sliders_box = Box(app, width="fill", align="top")
 config_box = Box(app, width="fill", align="top", border=True)
 image_box = Box(app, width="fill", height="fill", align="bottom")
-drawing = Drawing(image_box, width="fill", height="fill")
+hex_drawing = Drawing(image_box, width="fill", height="fill")
 
 # length, row, col sliders
 Text(sliders_box, text="Size", font=HEADING_FONT, align="left")
@@ -92,10 +92,10 @@ offset_choice.font = BODY_FONT
 Text(config_box, text="Offset", font=HEADING_FONT, align="right")
 
 # button for generating hexagons
-start = PushButton(config_box, command=drawHexagons, text="Generate")
-start.font = BODY_FONT
+start_button = PushButton(config_box, command=drawHexagons, text="Generate")
+start_button.font = BODY_FONT
 
 # events
-drawing.when_left_button_pressed = tracePath
+hex_drawing.when_left_button_pressed = tracePath
 
 app.display()
