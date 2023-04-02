@@ -3,15 +3,21 @@ from math import sqrt, floor
 # CONSTANTS
 SQRT_3 = sqrt(3)
 
+# configuration
+FLAT_TOP = None
+ODD_OFFSET = None
+
 # lists
 coordinates = list()
 positions = list()
 
 # returns points for drawing hexagon, populates positions and coordinates
 def generate(length: int, rows: int, cols: int, flat_top: bool, odd_offset: bool):
-    global coordinates, positions
+    global coordinates, positions, FLAT_TOP, ODD_OFFSET
     coordinates.clear()
     positions.clear()
+    FLAT_TOP = flat_top
+    ODD_OFFSET = odd_offset
     L = length
     drawingPoints = list()
     for row in range(rows):
@@ -68,3 +74,18 @@ def findNearestIndex(mouse_pos):
         dy = mouse_pos[1] - pos[1]
         dists.append(dx**2 + dy**2)
     return dists.index(min(dists))
+
+
+# returns True if two hexagons are neighbors
+def areNeighbors(index_1, index_2):
+    if FLAT_TOP:
+        diffs = [(0, 1), (-1, 0.5), (-1, -0.5), (0, -1), (1, -0.5), (1, 0.5)]
+    else:
+        diffs = [(0.5, 1), (-0.5, 1), (-1, 0), (-0.5, -1), (0.5, -1), (1, 0)]
+    c1 = coordinates[index_1]
+    c2 = coordinates[index_2]
+    diff = (c1[0] - c2[0], c1[1] - c2[1])
+    if diff in diffs:
+        return True
+    else:
+        return False

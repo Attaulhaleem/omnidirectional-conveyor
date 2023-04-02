@@ -24,11 +24,19 @@ def drawHexagons():
     print(hexagon.positions)
 
 
+path = list()
 # called on left click on hexagon drawing
-def tracePath(event_data):
-    mouse_pos = (event_data.x, event_data.y)
-    index = hexagon.findNearestIndex(mouse_pos)
-    print("Clicked Hexagon: ", hexagon.positions[index][0], hexagon.positions[index][1])
+def tracePath():
+    try:
+        id = hex_drawing.tk.find_withtag("current")[0] - 1
+    except:
+        return
+    if path and not hexagon.areNeighbors(id, path[-1]):
+        return
+    else:
+        path.append(id)
+        print(str(id) + "-->", end=" ")
+        hex_drawing.tk.itemconfigure("current", fill="white")
 
 
 """ APP """
