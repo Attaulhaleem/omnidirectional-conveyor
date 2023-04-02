@@ -4,20 +4,21 @@ import time
 GPIO.setmode(GPIO.BOARD)  # use board pin numberings
 
 # shift register pins
-latchPin = 11
-dataPin = 13
-clockPin = 15
+latch_pin = 11
+data_pin = 13
+clock_pin = 15
 
 # motor states
 FORWARD = (1, 0)
 BACKWARD = (0, 1)
 RELEASE = (0, 0)
 
+
 def setup():
     # pin declarations
-    GPIO.setup(latchPin, GPIO.OUT)
-    GPIO.setup(dataPin, GPIO.OUT)
-    GPIO.setup(clockPin, GPIO.OUT)
+    GPIO.setup(latch_pin, GPIO.OUT)
+    GPIO.setup(data_pin, GPIO.OUT)
+    GPIO.setup(clock_pin, GPIO.OUT)
 
 
 # format data for writing to shift register
@@ -29,11 +30,10 @@ def getBinaryList(stateList: list[tuple[int]]):
     for state in stateList:
         if state not in (FORWARD, BACKWARD, RELEASE):
             raise Exception("Invalid motor state in input list.")
-    motorValues = [val for state in stateList for val in state]  # convert to flat list
+    motor_values = [val for state in stateList for val in state]  # convert to flat list
     # see shield schematic [M3 and M4 were replaced on my shield] (http://wiki.sunfounder.cc/images/f/ff/L293D_schematic.png)
-    # oldShieldConfig = (5, 7, 4, 3, 1, 0, 2, 6) # shield with yellow light
-    newShieldConfig = (4, 7, 5, 3, 1, 0, 2, 6) # shield with green light
-    return [motorValues[i] for i in newShieldConfig]
+    shield_config = (4, 7, 5, 3, 1, 0, 2, 6)
+    return [motor_values[i] for i in shield_config]
 
 
 # write data to shift register
@@ -43,18 +43,18 @@ def shiftOut(dataList: list[int]):
     for d in dataList:
         if d not in (0, 1):
             raise Exception("Input data must be in binary format.")
-    GPIO.output(clockPin, GPIO.LOW)
-    GPIO.output(latchPin, GPIO.LOW)
+    GPIO.output(clock_pin, GPIO.LOW)
+    GPIO.output(latch_pin, GPIO.LOW)
     # send serial data
     for d in dataList:
-        GPIO.output(dataPin, d)  # write one bit to data pin
-        GPIO.output(clockPin, GPIO.LOW)  # pull clock pin LOW
+        GPIO.output(data_pin, d)  # write one bit to data pin
+        GPIO.output(clock_pin, GPIO.LOW)  # pull clock pin LOW
         time.sleep(0.1)  # wait for 100 ms
-        GPIO.output(clockPin, GPIO.HIGH)  # pull clock pin HIGH to send rising edge
+        GPIO.output(clock_pin, GPIO.HIGH)  # pull clock pin HIGH to send rising edge
     # show data on output pins
-    GPIO.output(latchPin, GPIO.HIGH)  # pull latch pin HIGH
+    GPIO.output(latch_pin, GPIO.HIGH)  # pull latch pin HIGH
     time.sleep(0.1)  # wait for 100 ms
-    GPIO.output(latchPin, GPIO.LOW)  # pull latch pin LOW
+    GPIO.output(latch_pin, GPIO.LOW)  # pull latch pin LOW
 
 
 SampleStates = [
