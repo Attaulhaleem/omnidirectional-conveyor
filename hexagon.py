@@ -13,7 +13,7 @@ count = 0
 
 # returns points for drawing hexagon, populates positions and coordinates
 def generate(length: int, rows: int, cols: int, flat_top: bool, odd_offset: bool):
-    global coordinates, positions, FLAT_TOP, ODD_OFFSET
+    global coordinates, positions, FLAT_TOP, ODD_OFFSET, count
     coordinates.clear()
     positions.clear()
     FLAT_TOP = flat_top
@@ -91,3 +91,12 @@ def areNeighbors(index_1, index_2):
         return True
     else:
         return False
+
+
+# returns indexes of hexagons which make a valid path
+def getValidIndexes():
+    valid_ids = list()
+    for i in range(count):
+        if not path or areNeighbors(i, path[-1]):
+            valid_ids.append(i)
+    return valid_ids

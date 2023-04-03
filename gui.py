@@ -6,6 +6,8 @@ import hexagon
 # called when button pressed, draw hexagons on screen
 def drawHexagons():
     hex_drawing.clear()
+    hexagon.path.clear()
+    path_text.clear()
     length = len_slider.value
     rows = row_slider.value
     cols = col_slider.value
@@ -14,29 +16,32 @@ def drawHexagons():
     fill_color = (red_slider.value, green_slider.value, blue_slider.value)
     drawingPoints = hexagon.generate(length, rows, cols, flat_top, odd_offset)
     for pts in drawingPoints:
-        hex_drawing.polygon(
-            pts,
-            color=fill_color,
-            outline=True,
-            outline_color="black",
-        )
+        hex_drawing.polygon(pts, color=fill_color, outline=True)
     print(hexagon.coordinates)
     print(hexagon.positions)
 
 
-path = list()
-# called on left click on hexagon drawing
-def tracePath():
+def getClickedIndex():
     try:
-        id = hex_drawing.tk.find_withtag("current")[0] - 1
+        return hex_drawing.tk.find_withtag("current")[0] - 1
     except:
-        return
-    if path and not hexagon.areNeighbors(id, path[-1]):
-        return
+        return None
+
+
+# called when left click on hexagon
+def tracePath():
+    id = getClickedIndex()
+    if id in hexagon.getValidIndexes():
+        hexagon.path.append(id)
+        path_text.value = hexagon.path
+
+
+def setCursor():
+    id = getClickedIndex()
+    if id in hexagon.getValidIndexes():
+        hex_drawing.tk.config(cursor="plus")
     else:
-        path.append(id)
-        print(str(id) + "-->", end=" ")
-        hex_drawing.tk.itemconfigure("current", fill="white")
+        hex_drawing.tk.config(cursor="")
 
 
 """ APP """
@@ -53,8 +58,8 @@ app = App(title="Omniveyor", bg=BG_COLOR)
 # app.tk.state("zoomed")  # maximize window
 sliders_box = Box(app, width="fill", align="top")
 config_box = Box(app, width="fill", align="top", border=True)
+text_box = Box(app, width="fill", align="top", border=True)
 image_box = Box(app, width="fill", height="fill", align="bottom")
-hex_drawing = Drawing(image_box, width="fill", height="fill")
 
 # length, row, col sliders
 Text(sliders_box, text="Size", font=HEADING_FONT, align="left")
@@ -103,7 +108,15 @@ Text(config_box, text="Offset", font=HEADING_FONT, align="right")
 start_button = PushButton(config_box, command=drawHexagons, text="Generate")
 start_button.font = BODY_FONT
 
+# path text
+Text(text_box, text="Path", font=HEADING_FONT, align="left")
+path_text = Text(text_box, font=BODY_FONT, align="left")
+
+# hexagon structure
+hex_drawing = Drawing(image_box, width="fill", height="fill")
+
 # events
+hex_drawing.when_mouse_moved = setCursor
 hex_drawing.when_left_button_pressed = tracePath
 
 app.display()
