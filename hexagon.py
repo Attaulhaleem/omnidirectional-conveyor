@@ -1,3 +1,4 @@
+from queue import Queue
 from math import sqrt, floor
 
 # CONSTANTS
@@ -93,6 +94,15 @@ def areNeighbors(index_1, index_2):
         return False
 
 
+# returns all neighbors for a hexagon index
+def getNeighbors(index):
+    neighbors = list()
+    for i in range(count):
+        if areNeighbors(index, i):
+            neighbors.append(i)
+    return neighbors
+
+
 # returns indexes of hexagons which make a valid path
 def getValidIndexes():
     valid_ids = list()
@@ -100,3 +110,29 @@ def getValidIndexes():
         if not path or areNeighbors(i, path[-1]):
             valid_ids.append(i)
     return valid_ids
+
+
+# get shortest path from one index to other
+def getPathIndexes(start, goal):
+    frontier = Queue()
+    frontier.put(start)
+    came_from = dict()  # path A->B stored as came_from[B] == A
+    came_from[start] = None
+
+    while not frontier.empty():
+        current = frontier.get()
+        if current == goal:
+            break
+        for next in getNeighbors(current):
+            if next not in came_from:
+                frontier.put(next)
+                came_from[next] = current
+
+    current = goal
+    path = list()
+    while current != start:
+        path.append(current)
+        current = came_from[current]
+    path.append(start)
+    path.reverse()
+    return path
