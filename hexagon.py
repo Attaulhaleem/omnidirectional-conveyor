@@ -118,7 +118,6 @@ def getPathIndexes(start, goal):
     frontier.put(start)
     came_from = dict()  # path A->B stored as came_from[B] == A
     came_from[start] = None
-
     while not frontier.empty():
         current = frontier.get()
         if current == goal:
@@ -127,7 +126,6 @@ def getPathIndexes(start, goal):
             if next not in came_from:
                 frontier.put(next)
                 came_from[next] = current
-
     current = goal
     path = list()
     while current != start:
