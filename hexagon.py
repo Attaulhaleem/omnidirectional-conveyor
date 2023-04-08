@@ -7,6 +7,7 @@ SQRT_3 = sqrt(3)
 # accessible variables
 FLAT_TOP = None
 ODD_OFFSET = None
+ids = list()
 coordinates = list()
 positions = list()
 path = list()
@@ -14,16 +15,16 @@ count = 0
 
 # returns points for drawing hexagon, populates positions and coordinates
 def generate(length: int, rows: int, cols: int, flat_top: bool, odd_offset: bool):
-    global coordinates, positions, FLAT_TOP, ODD_OFFSET, count
+    global ids, coordinates, positions, FLAT_TOP, ODD_OFFSET, count
     coordinates.clear()
     positions.clear()
     FLAT_TOP = flat_top
     ODD_OFFSET = odd_offset
     L = length
     drawingPoints = list()
-    for row in range(rows):
+    if flat_top:
         for col in range(cols):
-            if flat_top:
+            for row in range(rows):
                 if not col % 2 == odd_offset and row == 0 and rows > 1:
                     continue
                 X = col * 1.5 * L
@@ -39,10 +40,15 @@ def generate(length: int, rows: int, cols: int, flat_top: bool, odd_offset: bool
                         (X + 0.5 * L, Y + SQRT_3 * L),
                     ]
                 )
+                count += 1
+                ids.append(
+                    count if not col % 2 == odd_offset else count + rows - 1 - 2 * row
+                )
                 coordinates.append((col, row if col % 2 == odd_offset else row - 0.5))
                 positions.append((floor(X + L), floor(Y + 0.5 * SQRT_3 * L)))
-                count += 1
-            else:
+    else:
+        for row in range(rows):
+            for col in range(cols):
                 if not row % 2 == odd_offset and col == 0 and cols > 1:
                     continue
                 X = col * SQRT_3 * L
@@ -58,9 +64,12 @@ def generate(length: int, rows: int, cols: int, flat_top: bool, odd_offset: bool
                         (X + SQRT_3 * L, Y + 0.5 * L),
                     ]
                 )
+                count += 1
+                ids.append(
+                    count if not row % 2 == odd_offset else count + cols - 1 - 2 * col
+                )
                 coordinates.append((col if row % 2 == odd_offset else col - 0.5, row))
                 positions.append((floor(X + 0.5 * SQRT_3 * L), floor(Y + L)))
-                count += 1
     return drawingPoints
 
 
