@@ -49,11 +49,11 @@ def shiftOut(dataList: list[int]):
     for d in dataList:
         GPIO.output(data_pin, d)  # write one bit to data pin
         GPIO.output(clock_pin, GPIO.LOW)  # pull clock pin LOW
-        time.sleep(0.1)  # wait for 100 ms
+        time.sleep(0.01)  # wait for 10 ms
         GPIO.output(clock_pin, GPIO.HIGH)  # pull clock pin HIGH to send rising edge
     # show data on output pins
     GPIO.output(latch_pin, GPIO.HIGH)  # pull latch pin HIGH
-    time.sleep(0.1)  # wait for 100 ms
+    time.sleep(0.01)  # wait for 10 ms
     GPIO.output(latch_pin, GPIO.LOW)  # pull latch pin LOW
 
 

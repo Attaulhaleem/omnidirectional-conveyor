@@ -7,21 +7,20 @@ SQRT_3 = sqrt(3)
 # accessible variables
 FLAT_TOP = None
 ODD_OFFSET = None
-ids = list()
 coordinates = list()
 positions = list()
-path = list()
 count = 0
 
 # returns points for drawing hexagon, populates positions and coordinates
 def generate(length: int, rows: int, cols: int, flat_top: bool, odd_offset: bool):
-    global ids, coordinates, positions, FLAT_TOP, ODD_OFFSET, count
+    global coordinates, positions, FLAT_TOP, ODD_OFFSET, count
     coordinates.clear()
     positions.clear()
     FLAT_TOP = flat_top
     ODD_OFFSET = odd_offset
     L = length
     drawingPoints = list()
+    ids = list()
     if flat_top:
         for col in range(cols):
             for row in range(rows):
@@ -70,6 +69,9 @@ def generate(length: int, rows: int, cols: int, flat_top: bool, odd_offset: bool
                 )
                 coordinates.append((col if row % 2 == odd_offset else col - 0.5, row))
                 positions.append((floor(X + 0.5 * SQRT_3 * L), floor(Y + L)))
+    drawingPoints = [drawingPoints[i - 1] for i in ids]
+    coordinates = [coordinates[i - 1] for i in ids]
+    positions = [positions[i - 1] for i in ids]
     return drawingPoints
 
 
@@ -96,11 +98,12 @@ def areNeighbors(index_1, index_2):
         diffs = [(0.5, 1), (-0.5, 1), (-1, 0), (-0.5, -1), (0.5, -1), (1, 0)]
     c1 = coordinates[index_1]
     c2 = coordinates[index_2]
-    diff = (c1[0] - c2[0], c1[1] - c2[1])
-    if diff in diffs:
-        return True
-    else:
-        return False
+    dx = c1[0] - c2[0]
+    dy = c1[1] - c2[1]
+    for diff in diffs:
+        if abs(dx - diff[0]) < 0.1 and abs(dy - diff[1]) < 0.1:
+            return True
+    return False
 
 
 # returns all neighbors for a hexagon index
@@ -110,15 +113,6 @@ def getNeighbors(index):
         if areNeighbors(index, i):
             neighbors.append(i)
     return neighbors
-
-
-# returns indexes of hexagons which make a valid path
-def getValidIndexes():
-    valid_ids = list()
-    for i in range(count):
-        if not path or areNeighbors(i, path[-1]):
-            valid_ids.append(i)
-    return valid_ids
 
 
 # get shortest path from one index to other
