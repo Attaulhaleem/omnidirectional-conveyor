@@ -1,16 +1,79 @@
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 import hexagon
 from videofeed import LabelVideoFeed
 
-# FONTS
+""" ASSETS """
+assets_path = "app/assets/"
+
+""" CALLBACK FUNCTIONS """
+
+
+# def loadTkImage(file, dir="", size=(10, 10)):
+#     img = Image.open(dir + file)
+#     img = img.resize(TITLE_ICON_SIZE)
+#     img = ImageTk.PhotoImage(img)
+
+
+def deleteManualPath(e):
+    hexagons_canvas.delete("spline")
+    hexagons_canvas.old_coords = None
+
+
+def drawManualPath(e):
+    if not manual_path.get():
+        return
+    print(hexagons_canvas.gettags("current"))
+    if "hexagon" in hexagons_canvas.gettags("current"):
+        x, y = e.x, e.y
+        if hexagons_canvas.old_coords is not None:
+            x1, y1 = hexagons_canvas.old_coords
+            hexagons_canvas.create_line(x, y, x1, y1, width=3, tags="spline")
+        hexagons_canvas.old_coords = x, y
+
+
+def drawShortestPath():
+    hexagons_canvas.delete("lines")
+    path_move_button.state(["disabled"])
+    if path_src.get() == path_dest.get():
+        path_text.set("")
+        messagebox.showinfo("Error", "Start and end points cannot be the same!")
+        return
+    path = hexagon.getPathIndexes(path_src.get(), path_dest.get())
+    path_text.set(" -> ".join(map(str, path)))
+    path_positions = [val for i in path for val in hexagon.positions[i]]
+    hexagons_canvas.create_line(
+        path_positions, arrow="last", capstyle="round", tags="lines", width=3
+    )
+    path_move_button.state(["!disabled"])
+
+
+def movePath():
+    return
+
+
+def activateManual():
+    if manual_path.get():
+        new_state = ["disabled"]
+        path_move_button.state(["!disabled"])
+    else:
+        new_state = ["!disabled"]
+        path_move_button.state(["disabled"])
+    path_src_spinbox.state(new_state)
+    path_dest_spinbox.state(new_state)
+    path_draw_button.state(new_state)
+    path_text.set("")
+    hexagons_canvas.delete("lines")
+
+
+""" FONTS """
 TITLE_FONT = ("TkHeadingFont", 35)
 SUBTITLE_FONT = ("TkTextFont", 18)
 HEADING_FONT = ("TkHeadingFont", 14)
 BODY_FONT = ("TkTextFont", 10)
 
-# IMAGE SIZES
+""" IMAGE SIZES """
 TITLE_ICON_SIZE = (120, 120)
 HEADING_ICON_SIZE = (50, 50)
 BUTTON_ICON_SIZE = (30, 30)
@@ -18,9 +81,9 @@ BUTTON_ICON_SIZE = (30, 30)
 """ WINDOW """
 root = Tk()
 root.state("zoomed")
-
 main_frame = ttk.Frame(root, padding=10)
-# define style for frame templates
+
+""" TEMPLATE """
 normal_frame_style = ttk.Style()
 normal_frame_style.configure("Normal.TFrame", padding=5)
 
@@ -28,7 +91,7 @@ normal_frame_style.configure("Normal.TFrame", padding=5)
 title_frame = ttk.Frame(main_frame, style="Normal.TFrame")
 
 # load and resize title image
-title_image = Image.open("app/assets/hex_box_blue.png")
+title_image = Image.open(assets_path + "hex_box_blue.png")
 title_image = title_image.resize(TITLE_ICON_SIZE)
 title_image = ImageTk.PhotoImage(title_image)
 # add image to label
@@ -57,20 +120,22 @@ display_frame = ttk.Frame(main_frame, style="Normal.TFrame", relief="raised")
 hexagons_canvas = Canvas(
     display_frame, highlightthickness=1, highlightbackground="black"
 )
+hexagons_canvas.bind("<Button-1>", deleteManualPath)
+hexagons_canvas.bind("<B1-Motion>", drawManualPath)
 
 grid = hexagon.generate(50, 3, 4, False, True, 10, 10)
 for i in range(len(grid)):
     hexagons_canvas.create_polygon(
-        grid[i], fill="#00a1af", outline="black", activefill="#59a310"
+        grid[i], fill="#00a1af", outline="black", activefill="#59a310", tags="hexagon"
     )
     hexagons_canvas.create_text(
-        hexagon.positions[i][0], hexagon.positions[i][1], text=str(i + 1)
+        hexagon.positions[i][0], hexagon.positions[i][1], text=str(i), tags="id"
     )
 for widget in hexagons_canvas.winfo_children():
     widget.grid_configure(padx=10, pady=10)
 
 # load and resize config image
-config_image = Image.open("app/assets/hexagons1.png")
+config_image = Image.open(assets_path + "hexagons1.png")
 config_image = config_image.resize(HEADING_ICON_SIZE)
 config_image = ImageTk.PhotoImage(config_image)
 
@@ -94,44 +159,80 @@ display_label = ttk.Label(
 )
 
 feed_label = ttk.Label(display_frame, relief="raised", anchor="center")
-# LabelVideoFeed(feed_label, 480, 270, 30)
+LabelVideoFeed(feed_label, 480, 270, 30)
 
-""" CONTROL """
+""" CONTROL PANEL """
 control_frame = ttk.Frame(main_frame, style="Normal.TFrame")
 
-spath_frame = ttk.Frame(control_frame, relief="sunken")
+""" PATH FINDER """
+path_frame = ttk.Frame(control_frame, relief="sunken")
 
-spath_title_image = Image.open("app/assets/path_icon1.png")
-spath_title_image = spath_title_image.resize(HEADING_ICON_SIZE)
-spath_title_image = ImageTk.PhotoImage(spath_title_image)
+path_title_image = Image.open(assets_path + "path_icon.png")
+path_title_image = path_title_image.resize(HEADING_ICON_SIZE)
+path_title_image = ImageTk.PhotoImage(path_title_image)
 
-spath_title_label = ttk.Label(
-    spath_frame,
-    text="Shortest Path",
-    image=spath_title_image,
+path_title_label = ttk.Label(
+    path_frame,
+    text="Path Finder",
+    image=path_title_image,
     compound="left",
     font=HEADING_FONT,
     anchor="center",
 )
 
-spath_src_label = ttk.Label(spath_frame, font=BODY_FONT, text="Start", anchor="w")
-spath_src = IntVar()
-spath_src_spinbox = ttk.Spinbox(spath_frame, from_=1, to=10, textvariable=spath_src)
+path_src_label = ttk.Label(path_frame, font=BODY_FONT, text="Start Point", anchor="w")
+path_src = IntVar()
+path_src_spinbox = ttk.Spinbox(path_frame, from_=0, to=9, textvariable=path_src)
+path_src_spinbox.state(["readonly"])
 
-spath_dest_label = ttk.Label(spath_frame, font=BODY_FONT, text="End", anchor="w")
-spath_dest = IntVar()
-spath_dest_spinbox = ttk.Spinbox(spath_frame, from_=1, to=10, textvariable=spath_dest)
+path_dest_label = ttk.Label(path_frame, font=BODY_FONT, text="End Point", anchor="w")
+path_dest = IntVar()
+path_dest_spinbox = ttk.Spinbox(path_frame, from_=0, to=9, textvariable=path_dest)
+path_dest_spinbox.state(["readonly"])
+path_dest.set(1)
 
-spath_button_image = Image.open("app/assets/draw_icon.png")
-spath_button_image = spath_button_image.resize(BUTTON_ICON_SIZE)
-spath_button_image = ImageTk.PhotoImage(spath_button_image)
+manual_path = BooleanVar()
+path_checkbutton = ttk.Checkbutton(
+    path_frame,
+    text="Use Manual Path",
+    variable=manual_path,
+    onvalue=True,
+    offvalue=False,
+    command=activateManual,
+)
 
-spath_button = ttk.Button(
-    spath_frame,
+path_draw_image = Image.open(assets_path + "draw_icon.png")
+path_draw_image = path_draw_image.resize(BUTTON_ICON_SIZE)
+path_draw_image = ImageTk.PhotoImage(path_draw_image)
+
+path_draw_button = ttk.Button(
+    path_frame,
     text="Draw Shortest Path",
-    image=spath_button_image,
+    image=path_draw_image,
+    command=drawShortestPath,
     compound="top",
     padding=5,
+)
+
+path_move_image = Image.open(assets_path + "move_icon.png")
+path_move_image = path_move_image.resize(BUTTON_ICON_SIZE)
+path_move_image = ImageTk.PhotoImage(path_move_image)
+
+path_move_button = ttk.Button(
+    path_frame,
+    text="Traverse Path",
+    image=path_move_image,
+    command=movePath,
+    compound="top",
+    padding=5,
+    state=["disabled"],
+)
+
+path_text_label = ttk.Label(path_frame, text="Path", font=BODY_FONT)
+
+path_text = StringVar()
+path_text_entry = ttk.Entry(
+    path_frame, state=["readonly"], font=BODY_FONT, textvariable=path_text
 )
 
 """ GEOMETRY MANAGEMENT """
@@ -144,19 +245,24 @@ subtitle_label.grid(column=1, row=1, sticky=(N, S, E, W))
 
 display_frame.grid(column=0, row=1, sticky=(N, S, E, W))
 hexagons_canvas.grid(column=0, row=0, rowspan=2, padx=20, pady=20, sticky=(N, S, E, W))
+hexagons_canvas.old_coords = None
 display_title_label.grid(column=1, row=0, sticky=(N, S, E, W))
 display_label.grid(column=1, row=1, sticky=(N, S, E, W))
 feed_label.grid(column=2, row=0, rowspan=2, sticky=(N, S, E, W))
 
 control_frame.grid(column=0, row=2, sticky=(N, S, E, W))
 
-spath_frame.grid(column=0, row=0, sticky=(N, S, E, W))
-spath_title_label.grid(column=0, row=0, columnspan=2, sticky=(N, S, E, W))
-spath_src_label.grid(column=0, row=1, sticky=(N, S, E, W))
-spath_src_spinbox.grid(column=1, row=1, padx=5, pady=5, sticky=(N, S, E, W))
-spath_dest_label.grid(column=0, row=2, sticky=(N, S, E, W))
-spath_dest_spinbox.grid(column=1, row=2, padx=5, pady=5, sticky=(N, S, E, W))
-spath_button.grid(column=0, row=3, columnspan=2, sticky=(N, S, E, W))
+path_frame.grid(column=0, row=0, sticky=(N, S, E, W))
+path_title_label.grid(column=0, row=0, columnspan=4, sticky=(N, S, E, W))
+path_src_label.grid(column=0, row=1, sticky=(N, S, E, W))
+path_src_spinbox.grid(column=1, row=1, padx=5, pady=5, sticky=(N, S, E, W))
+path_dest_label.grid(column=0, row=2, sticky=(N, S, E, W))
+path_dest_spinbox.grid(column=1, row=2, padx=5, pady=5, sticky=(N, S, E, W))
+path_checkbutton.grid(column=2, row=1, columnspan=2, rowspan=2, sticky=(N, S, E, W))
+path_draw_button.grid(column=0, row=3, columnspan=2, sticky=(N, S, E, W))
+path_move_button.grid(column=2, row=3, columnspan=2, sticky=(N, S, E, W))
+path_text_label.grid(column=0, row=4, sticky=(N, S, E, W))
+path_text_entry.grid(column=1, row=4, columnspan=3, sticky=(N, S, E, W))
 
 """ RESIZING PROPERTIES """
 root.columnconfigure(0, weight=1)
@@ -167,5 +273,10 @@ display_frame.columnconfigure(0, weight=1)
 display_frame.columnconfigure(1, weight=1)
 display_frame.columnconfigure(2, weight=1)
 control_frame.columnconfigure(0, weight=1)
+path_frame.columnconfigure(0, weight=1)
+path_frame.columnconfigure(1, weight=1)
+path_frame.columnconfigure(2, weight=1)
+path_frame.columnconfigure(3, weight=1)
+
 
 root.mainloop()
