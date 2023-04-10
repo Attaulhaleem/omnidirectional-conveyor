@@ -1,96 +1,121 @@
-from guizero import App, Box, Drawing, PushButton, Slider, Text, error
+from tkinter import *
+from tkinter import ttk
+from PIL import Image, ImageTk
 import hexagon
+from videofeed import LabelVideoFeed
 
-""" CALLBACK FUNCTIONS """
+# FONTS
+TITLE_FONT = ("TkHeadingFont", 30)
+SUBTITLE_FONT = ("TkMenuFont", 15)
+HEADING_FONT = ("TkHeadingFont", 14)
+BODY_FONT = ("TkTextFont", 10)
 
-# called when button pressed, draw hexagons on screen
-def drawHexagons():
-    drawingPoints = hexagon.generate(50, 3, 4, False, True)
-    for i in range(len(drawingPoints)):
-        hex_drawing.polygon(drawingPoints[i], color=HEX_COLOR, outline=True)
-        hex_drawing.text(
-            hexagon.positions[i][0],
-            hexagon.positions[i][1],
-            text=str(i),
-            font=HEADING_FONT,
-        )
-    print(hexagon.coordinates)
-    print(hexagon.positions)
+""" WINDOW """
+root = Tk()
+root.state("zoomed")
 
+main_frame = ttk.Frame(root, padding=10)
+# define style for frame templates
+normal_frame_style = ttk.Style()
+normal_frame_style.configure("Normal.TFrame", padding=5)
 
-def drawPath():
-    global line_ids
-    if src_slider.value == dest_slider.value:
-        error(title="Error", text="Source and destination cannot be the same!")
-        if line_ids:
-            for id in line_ids:
-                hex_drawing.delete(id)
-            line_ids.clear()
-        path_text.value = ""
-        return
-    else:
-        path = hexagon.getPathIndexes(src_slider.value, dest_slider.value)
-        path_text.value = " --> ".join(map(str, path))
-        if line_ids:
-            for id in line_ids:
-                hex_drawing.delete(id)
-            line_ids.clear()
-        for i in range(len(path) - 1):
-            id = hex_drawing.line(
-                hexagon.positions[path[i]][0],
-                hexagon.positions[path[i]][1],
-                hexagon.positions[path[i + 1]][0],
-                hexagon.positions[path[i + 1]][1],
-                width=3,
-            )
-            line_ids.append(id)
+""" TITLE """
+title_frame = ttk.Frame(main_frame, style="Normal.TFrame")
 
+# load and resize title image
+title_image = Image.open("app/assets/hex-box-blue.png")
+title_image = title_image.resize((120, 120))
+title_image = ImageTk.PhotoImage(title_image)
+# add image to label
+title_image_label = ttk.Label(title_frame, anchor="w", image=title_image)
 
-""" APP """
-
-# fonts
-HEADING_FONT = "Inter Medium"
-BODY_FONT = "Inter Regular"
-
-# colors
-BG_COLOR = (250, 249, 246)
-HEX_COLOR = (29, 109, 134)
-
-# app elements
-app = App(title="Omniveyor", bg=BG_COLOR, layout="grid")
-app.tk.state("zoomed")  # maximize window
-image_box = Box(app, width=450, height=275, border=True, grid=[0, 0])
-settings_box = Box(app, width=450, height=200, border=True, layout="grid", grid=[0, 1])
-sliders_box = Box(settings_box, border=True, layout="grid", grid=[0, 0])
-button_box = Box(settings_box, border=True, layout="grid", grid=[1, 0])
-path_box = Box(settings_box, border=True, layout="grid", grid=[0, 1])
-
-# hexagon structure
-hex_drawing = Drawing(image_box, width="fill", height="fill")
-line_ids = list()
-drawHexagons()
-
-# sliders
-Text(sliders_box, text="Source", font=HEADING_FONT, grid=[0, 0])
-src_slider = Slider(sliders_box, start=0, end=hexagon.count - 1, grid=[1, 0])
-
-Text(sliders_box, text="Destination", font=HEADING_FONT, grid=[0, 1])
-dest_slider = Slider(sliders_box, start=0, end=hexagon.count - 1, grid=[1, 1])
-
-# button for drawing box
-start_button = PushButton(
-    button_box,
-    width="fill",
-    height="fill",
-    command=drawPath,
-    text="Draw Path",
-    grid=[0, 0],
+# title label
+title_text_label = ttk.Label(
+    title_frame,
+    text="OmniVeyor GUI",
+    font=TITLE_FONT,
+    anchor="center",
 )
-start_button.font = HEADING_FONT
 
-# path
-Text(path_box, text="Path", font=HEADING_FONT, grid=[0, 0])
-path_text = Text(path_box, font=BODY_FONT, grid=[1, 0])
+# subtitle label
+subtitle_label = ttk.Label(
+    title_frame,
+    text="Atta ul Haleem\tInshal Khan\tMustafa Ansari\tShaheer Ahmed",
+    font=SUBTITLE_FONT,
+    anchor="center",
+)
+
+""" DISPLAY """
+display_frame = ttk.Frame(main_frame, style="Normal.TFrame", relief="raised")
+
+# hexagon drawing
+hexagons_canvas = Canvas(
+    display_frame, highlightthickness=1, highlightbackground="black"
+)
+
+grid = hexagon.generate(50, 3, 4, False, True, 10, 10)
+for i in range(len(grid)):
+    hexagons_canvas.create_polygon(
+        grid[i], fill="#00a1af", outline="black", activefill="#59a310"
+    )
+    hexagons_canvas.create_text(
+        hexagon.positions[i][0], hexagon.positions[i][1], text=str(i + 1)
+    )
+for widget in hexagons_canvas.winfo_children():
+    widget.grid_configure(padx=10, pady=10)
+
+# load and resize config image
+config_image = Image.open("app/assets/hexagons1.png")
+config_image = config_image.resize((50, 50))
+config_image = ImageTk.PhotoImage(config_image)
+
+display_title_label = ttk.Label(
+    display_frame,
+    text="Configuration",
+    font=HEADING_FONT,
+    compound="left",
+    image=config_image,
+    relief="ridge",
+    anchor="center",
+)
+
+display_label = ttk.Label(
+    display_frame,
+    text="Rows:\t\t3\n\nColumns:\t\t4\n\nOrientation:\tPointy Top\n\nOffset:\t\tOdd",
+    font=BODY_FONT,
+    anchor="center",
+    relief="ridge",
+    padding=10,
+)
+
+feed_label = ttk.Label(display_frame, relief="raised", anchor="center")
+LabelVideoFeed(feed_label, 480, 270, 30)
+
+""" CONTROL """
 
 
-app.display()
+""" GEOMETRY MANAGEMENT """
+main_frame.grid(column=0, row=0, sticky=(N, S, E, W))
+
+title_frame.grid(column=0, row=0, sticky=(N, S, E, W))
+title_image_label.grid(column=0, row=0, rowspan=2, sticky=(N, S, E, W))
+title_text_label.grid(column=1, row=0, sticky=(N, S, E, W))
+subtitle_label.grid(column=1, row=1, sticky=(N, S, E, W))
+
+display_frame.grid(column=0, row=1, sticky=(N, S, E, W))
+hexagons_canvas.grid(column=0, row=0, rowspan=2, padx=20, pady=20, sticky=(N, S, E, W))
+display_title_label.grid(column=1, row=0, sticky=(N, S, E, W))
+display_label.grid(column=1, row=1, sticky=(N, S, E, W))
+feed_label.grid(column=2, row=0, rowspan=2, sticky=(N, S, E, W))
+
+
+""" RESIZING PROPERTIES """
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
+main_frame.columnconfigure(0, weight=1)
+title_frame.columnconfigure(1, weight=1)
+display_frame.columnconfigure(0, weight=1)
+display_frame.columnconfigure(1, weight=1)
+display_frame.columnconfigure(2, weight=1)
+
+root.mainloop()
