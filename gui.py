@@ -16,41 +16,48 @@ assets_path = "app/assets/"
 #     img = ImageTk.PhotoImage(img)
 
 
-def deleteManualPath(e):
+def movePath():
+    return
+
+
+def clearManualPath(e):
     hexagons_canvas.delete("spline")
     hexagons_canvas.old_coords = None
+    path_list.clear()
+    path_text.set("")
 
 
 def drawManualPath(e):
     if not manual_path.get():
         return
-    print(hexagons_canvas.gettags("current"))
-    if "hexagon" in hexagons_canvas.gettags("current"):
-        x, y = e.x, e.y
-        if hexagons_canvas.old_coords is not None:
-            x1, y1 = hexagons_canvas.old_coords
-            hexagons_canvas.create_line(x, y, x1, y1, width=3, tags="spline")
-        hexagons_canvas.old_coords = x, y
+    index = hexagon.findNearestIndex((e.x, e.y))
+    if len(path_list) == 0 or path_list[-1] != index:
+        path_list.append(index)
+        path_text.set(" -> ".join(map(str, path_list)))
+    x, y = hexagon.positions[index]
+    if hexagons_canvas.old_coords is not None:
+        x1, y1 = hexagons_canvas.old_coords
+        hexagons_canvas.create_line(
+            x, y, x1, y1, width=3, smooth=1, tags="spline", arrow="first"
+        )
+    hexagons_canvas.old_coords = x, y
 
 
 def drawShortestPath():
+    global path_list
     hexagons_canvas.delete("lines")
     path_move_button.state(["disabled"])
     if path_src.get() == path_dest.get():
         path_text.set("")
         messagebox.showinfo("Error", "Start and end points cannot be the same!")
         return
-    path = hexagon.getPathIndexes(path_src.get(), path_dest.get())
-    path_text.set(" -> ".join(map(str, path)))
-    path_positions = [val for i in path for val in hexagon.positions[i]]
+    path_list = hexagon.getPathIndexes(path_src.get(), path_dest.get())
+    path_text.set(" -> ".join(map(str, path_list)))
+    path_positions = [val for i in path_list for val in hexagon.positions[i]]
     hexagons_canvas.create_line(
         path_positions, arrow="last", capstyle="round", tags="lines", width=3
     )
     path_move_button.state(["!disabled"])
-
-
-def movePath():
-    return
 
 
 def activateManual():
@@ -63,8 +70,11 @@ def activateManual():
     path_src_spinbox.state(new_state)
     path_dest_spinbox.state(new_state)
     path_draw_button.state(new_state)
+    path_list.clear()
     path_text.set("")
     hexagons_canvas.delete("lines")
+    hexagons_canvas.delete("spline")
+    hexagons_canvas.old_coords = None
 
 
 """ FONTS """
@@ -120,8 +130,8 @@ display_frame = ttk.Frame(main_frame, style="Normal.TFrame", relief="raised")
 hexagons_canvas = Canvas(
     display_frame, highlightthickness=1, highlightbackground="black"
 )
-hexagons_canvas.bind("<Button-1>", deleteManualPath)
-hexagons_canvas.bind("<B1-Motion>", drawManualPath)
+hexagons_canvas.tag_bind("hexagon", "<Button-1>", clearManualPath)
+hexagons_canvas.tag_bind("hexagon", "<B1-Motion>", drawManualPath)
 
 grid = hexagon.generate(50, 3, 4, False, True, 10, 10)
 for i in range(len(grid)):
@@ -192,6 +202,7 @@ path_dest_spinbox.state(["readonly"])
 path_dest.set(1)
 
 manual_path = BooleanVar()
+path_list = list()
 path_checkbutton = ttk.Checkbutton(
     path_frame,
     text="Use Manual Path",
