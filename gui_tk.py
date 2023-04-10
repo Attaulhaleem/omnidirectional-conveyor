@@ -2,23 +2,24 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 import hexagon
-import cv2
+from videofeed import LabelVideoFeed
 
 # FONTS
+TITLE_FONT = ("TkHeadingFont", 30)
+SUBTITLE_FONT = ("TkMenuFont", 15)
 HEADING_FONT = ("TkHeadingFont", 14)
 BODY_FONT = ("TkTextFont", 10)
 
-# top level window
+""" WINDOW """
 root = Tk()
 root.state("zoomed")
 
-# main window
 main_frame = ttk.Frame(root, padding=10)
-# define style for Frame template
+# define style for frame templates
 normal_frame_style = ttk.Style()
 normal_frame_style.configure("Normal.TFrame", padding=5)
 
-# frame for title and subtitle
+""" TITLE """
 title_frame = ttk.Frame(main_frame, style="Normal.TFrame")
 
 # load and resize title image
@@ -32,7 +33,7 @@ title_image_label = ttk.Label(title_frame, anchor="w", image=title_image)
 title_text_label = ttk.Label(
     title_frame,
     text="OmniVeyor GUI",
-    font=("TkHeadingFont", 30),
+    font=TITLE_FONT,
     anchor="center",
 )
 
@@ -40,11 +41,11 @@ title_text_label = ttk.Label(
 subtitle_label = ttk.Label(
     title_frame,
     text="Atta ul Haleem\tInshal Khan\tMustafa Ansari\tShaheer Ahmed",
-    font=("TkMenuFont", 10),
+    font=SUBTITLE_FONT,
     anchor="center",
 )
 
-# frame for hexagons canvas and statistics
+""" DISPLAY """
 display_frame = ttk.Frame(main_frame, style="Normal.TFrame", relief="raised")
 
 # hexagon drawing
@@ -74,6 +75,7 @@ display_title_label = ttk.Label(
     font=HEADING_FONT,
     compound="left",
     image=config_image,
+    relief="ridge",
     anchor="center",
 )
 
@@ -86,25 +88,28 @@ display_label = ttk.Label(
     padding=10,
 )
 
-feed_canvas = Canvas(display_frame, highlightthickness=1, highlightcolor="black")
-feed_canvas.create_rectangle(50, 50, 100, 100)
+feed_label = ttk.Label(display_frame, relief="raised", anchor="center")
+LabelVideoFeed(feed_label, 480, 270, 30)
 
-# align objects to grid
+""" CONTROL """
+
+
+""" GEOMETRY MANAGEMENT """
 main_frame.grid(column=0, row=0, sticky=(N, S, E, W))
-# title
+
 title_frame.grid(column=0, row=0, sticky=(N, S, E, W))
 title_image_label.grid(column=0, row=0, rowspan=2, sticky=(N, S, E, W))
 title_text_label.grid(column=1, row=0, sticky=(N, S, E, W))
 subtitle_label.grid(column=1, row=1, sticky=(N, S, E, W))
-# display
+
 display_frame.grid(column=0, row=1, sticky=(N, S, E, W))
 hexagons_canvas.grid(column=0, row=0, rowspan=2, padx=20, pady=20, sticky=(N, S, E, W))
 display_title_label.grid(column=1, row=0, sticky=(N, S, E, W))
 display_label.grid(column=1, row=1, sticky=(N, S, E, W))
-feed_canvas.grid(column=2, row=0, rowspan=2, sticky=(N, S, E, W))
-# control
+feed_label.grid(column=2, row=0, rowspan=2, sticky=(N, S, E, W))
 
-# set resizing properties
+
+""" RESIZING PROPERTIES """
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 main_frame.columnconfigure(0, weight=1)
