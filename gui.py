@@ -90,7 +90,7 @@ BUTTON_ICON_SIZE = (30, 30)
 
 """ WINDOW """
 root = Tk()
-root.state("zoomed")
+root.attributes("-fullscreen", True)
 main_frame = ttk.Frame(root, padding=10)
 
 """ TEMPLATE """
@@ -278,12 +278,22 @@ path_text_entry.grid(column=1, row=4, columnspan=3, sticky=(N, S, E, W))
 """ RESIZING PROPERTIES """
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
+
 main_frame.columnconfigure(0, weight=1)
+main_frame.rowconfigure(0, weight=1)
+
 title_frame.columnconfigure(1, weight=1)
+title_frame.rowconfigure(0, weight=1)
+title_frame.rowconfigure(1, weight=1)
+
 display_frame.columnconfigure(0, weight=1)
 display_frame.columnconfigure(1, weight=1)
 display_frame.columnconfigure(2, weight=1)
+display_frame.rowconfigure(0, weight=1)
+display_frame.rowconfigure(1, weight=1)
+
 control_frame.columnconfigure(0, weight=1)
+
 path_frame.columnconfigure(0, weight=1)
 path_frame.columnconfigure(1, weight=1)
 path_frame.columnconfigure(2, weight=1)
