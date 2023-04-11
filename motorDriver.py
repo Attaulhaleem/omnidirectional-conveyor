@@ -7,16 +7,16 @@ GPIO.setwarnings(False)  # remove pin usage warnings
 motor.setup()
 
 state_list = [
-    motor.UP_RIGHT,
-    motor.RIGHT,
-    motor.DOWN_RIGHT,
-    motor.DOWN_LEFT,
-    motor.LEFT,
-    motor.UP_LEFT,
-    motor.UP_RIGHT,
-    motor.RIGHT,
-    motor.DOWN_RIGHT,
-    motor.DOWN_LEFT,
+    [motor.UP_RIGHT],
+    [motor.RIGHT],
+    [motor.DOWN_RIGHT],
+    [motor.DOWN_LEFT],
+    [motor.LEFT],
+    [motor.UP_LEFT],
+    [motor.UP_RIGHT],
+    [motor.RIGHT],
+    [motor.DOWN_RIGHT],
+    [motor.DOWN_LEFT],
 ]
 
 data_list = motor.getChainedBinaryList(state_list)
