@@ -171,11 +171,8 @@ display_label = ttk.Label(
 feed_label = ttk.Label(display_frame, relief="raised", anchor="center")
 LabelVideoFeed(feed_label, 480, 270, 30)
 
-""" CONTROL PANEL """
-control_frame = ttk.Frame(main_frame, style="Normal.TFrame")
-
 """ PATH FINDER """
-path_frame = ttk.Frame(control_frame, relief="sunken")
+path_frame = ttk.Frame(main_frame, style="Normal.TFrame", relief="sunken")
 
 path_title_image = Image.open(assets_path + "path_icon.png")
 path_title_image = path_title_image.resize(HEADING_ICON_SIZE)
@@ -261,9 +258,7 @@ display_title_label.grid(column=1, row=0, sticky=(N, S, E, W))
 display_label.grid(column=1, row=1, sticky=(N, S, E, W))
 feed_label.grid(column=2, row=0, rowspan=2, sticky=(N, S, E, W))
 
-control_frame.grid(column=0, row=2, sticky=(N, S, E, W))
-
-path_frame.grid(column=0, row=0, sticky=(N, S, E, W))
+path_frame.grid(column=0, row=2, sticky=(N, S, E, W))
 path_title_label.grid(column=0, row=0, columnspan=4, sticky=(N, S, E, W))
 path_src_label.grid(column=0, row=1, sticky=(N, S, E, W))
 path_src_spinbox.grid(column=1, row=1, padx=5, pady=5, sticky=(N, S, E, W))
@@ -291,8 +286,6 @@ display_frame.columnconfigure(1, weight=1)
 display_frame.columnconfigure(2, weight=1)
 display_frame.rowconfigure(0, weight=1)
 display_frame.rowconfigure(1, weight=1)
-
-control_frame.columnconfigure(0, weight=1)
 
 path_frame.columnconfigure(0, weight=1)
 path_frame.columnconfigure(1, weight=1)
