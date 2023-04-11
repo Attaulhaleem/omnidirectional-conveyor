@@ -18,7 +18,13 @@ BACKWARD = (0, 1)
 RELEASE = (0, 0)
 
 # module states
-IDLE_STATE = [RELEASE, RELEASE, RELEASE]
+IDLE = [RELEASE, RELEASE, RELEASE]
+UP_RIGHT = [RELEASE, FORWARD, BACKWARD]
+RIGHT = [FORWARD, RELEASE, BACKWARD]
+DOWN_RIGHT = [FORWARD, BACKWARD, RELEASE]
+DOWN_LEFT = [RELEASE, BACKWARD, FORWARD]
+LEFT = [BACKWARD, RELEASE, FORWARD]
+UP_LEFT = [BACKWARD, FORWARD, RELEASE]
 
 
 def setup():
@@ -88,11 +94,10 @@ def shiftOut(data_list):
     GPIO.output(latch_pin, GPIO.LOW)  # pull latch pin LOW
 
 
-def writeMotors():
-    # list for storing current states of motor
-    current_state = [IDLE_STATE for _ in range(10)]
-
-    return
+# def writeMotors():
+#     # list for storing current states of motor
+#     current_state = [IDLE_STATE for _ in range(10)]
+#     return
 
 
 SampleStates = [

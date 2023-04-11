@@ -6,13 +6,21 @@ GPIO.setwarnings(False)  # remove pin usage warnings
 
 motor.setup()
 
-# motor.shiftOut([0, 0, 0, 0, 0, 0, 0, 1])
-# time.sleep(1000)
+state_list = [
+    motor.UP_RIGHT,
+    motor.RIGHT,
+    motor.DOWN_RIGHT,
+    motor.DOWN_LEFT,
+    motor.LEFT,
+    motor.UP_LEFT,
+    motor.UP_RIGHT,
+    motor.RIGHT,
+    motor.DOWN_RIGHT,
+    motor.DOWN_LEFT,
+]
 
-# run motor test
-for state in motor.SampleStates:
-    motorData = motor.getBinaryList(state)
-    motor.shiftOut(motorData)
-    time.sleep(5)  # wait for 5s
+data_list = motor.getChainedBinaryList(state_list)
+motor.shiftOut(data_list)
+time.sleep(100)
 
 GPIO.cleanup()
