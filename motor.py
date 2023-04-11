@@ -9,9 +9,6 @@ latch_pin = 11
 data_pin = 13
 clock_pin = 15
 
-# daisy chained shift registers
-daisy_chain = 10
-
 # motor states
 FORWARD = (1, 0)
 BACKWARD = (0, 1)
@@ -55,7 +52,7 @@ def getSingleBinaryList(state_list):
     return [motor_values[i] for i in shield_config]
 
 
-def getChainedBinaryList(state_list):
+def getChainedBinaryList(daisy_chain, state_list):
     """
     Format data for writing to daisy chained shift registers
     """
@@ -71,7 +68,7 @@ def getChainedBinaryList(state_list):
     return motor_values
 
 
-def shiftOut(data_list):
+def shiftOut(daisy_chain, data_list):
     """
     Writes data to shift register
     """
