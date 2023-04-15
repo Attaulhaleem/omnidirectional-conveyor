@@ -23,6 +23,8 @@ def shift_update(input, data, clock, latch):
         GPIO.output(data, int(input[i]))
         GPIO.output(clock, 1)
 
+
+def shift_latch(clock, latch):
     # put latch up to store data on register
     GPIO.output(clock, 0)
     GPIO.output(latch, 1)
@@ -32,6 +34,7 @@ def shift_update(input, data, clock, latch):
 shift_update([0, 1, 1, 0, 0, 0, 0, 1], dataPIN, clockPIN, latchPIN)
 shift_update([0, 1, 1, 0, 0, 0, 0, 1], dataPIN, clockPIN, latchPIN)
 shift_update([0, 1, 1, 0, 0, 0, 0, 1], dataPIN, clockPIN, latchPIN)
+shift_latch(clockPIN, latchPIN)
 time.sleep(1000)
 
 # PINs final cleaning
