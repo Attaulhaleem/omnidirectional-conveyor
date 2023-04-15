@@ -39,6 +39,7 @@ def shift_latch(clock, latch):
 shift_update([0, 0, 1, 0, 0, 1, 0, 0], dataPIN, clockPIN, latchPIN)
 shift_update([0, 0, 1, 0, 0, 1, 0, 0], dataPIN, clockPIN, latchPIN)
 shift_update([0, 0, 1, 0, 0, 1, 0, 0], dataPIN, clockPIN, latchPIN)
+shift_update([0, 0, 1, 0, 0, 1, 0, 0], dataPIN, clockPIN, latchPIN)
 shift_latch(clockPIN, latchPIN)
 time.sleep(1000)
 
