@@ -13,9 +13,9 @@ GPIO.setup((dataPIN, latchPIN, clockPIN), GPIO.OUT)
 # define shift register update function
 def shift_update(input, data, clock, latch):
     # put latch down to start data sending
-    GPIO.output(clock, 0)
+    # GPIO.output(clock, 0)
     GPIO.output(latch, 0)
-    GPIO.output(clock, 1)
+    # GPIO.output(clock, 1)
 
     # load data in reverse order
     for i in range(7, -1, -1):
@@ -26,9 +26,9 @@ def shift_update(input, data, clock, latch):
 
 def shift_latch(clock, latch):
     # put latch up to store data on register
-    GPIO.output(clock, 0)
+    # GPIO.output(clock, 0)
     GPIO.output(latch, 1)
-    GPIO.output(clock, 1)
+    # GPIO.output(clock, 1)
 
 
 shift_update([0, 1, 1, 0, 0, 0, 0, 1], dataPIN, clockPIN, latchPIN)
