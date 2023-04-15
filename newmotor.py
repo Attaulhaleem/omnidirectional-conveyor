@@ -33,7 +33,7 @@ for i in range(8):
     data = [0 for _ in range(8)]
     data[i] = 1
     shift_update(data, dataPIN, clockPIN, latchPIN)
-    time.sleep(1000)
+    time.sleep(5)
 
 # PINs final cleaning
 GPIO.cleanup()
