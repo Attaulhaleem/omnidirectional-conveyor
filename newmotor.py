@@ -35,8 +35,10 @@ for i in range(8):
     shift_update(data, dataPIN, clockPIN, latchPIN)
     time.sleep(5)
 
-# shift_update([0, 1, 1, 0, 0, 0, 0, 1], dataPIN, clockPIN, latchPIN)
-# time.sleep(1000)
+shift_update([0, 1, 1, 0, 0, 0, 0, 1], dataPIN, clockPIN, latchPIN)
+shift_update([0, 1, 1, 0, 0, 0, 0, 1], dataPIN, clockPIN, latchPIN)
+shift_update([0, 1, 1, 0, 0, 0, 0, 1], dataPIN, clockPIN, latchPIN)
+time.sleep(1000)
 
 # PINs final cleaning
 GPIO.cleanup()
