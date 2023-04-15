@@ -31,9 +31,9 @@ def shift_latch(clock, latch):
     # GPIO.output(clock, 1)
 
 
-shift_update([0, 1, 1, 0, 0, 0, 0, 1], dataPIN, clockPIN, latchPIN)
-shift_update([0, 1, 1, 0, 0, 0, 0, 1], dataPIN, clockPIN, latchPIN)
-shift_update([0, 1, 1, 0, 0, 0, 0, 1], dataPIN, clockPIN, latchPIN)
+shift_update([0, 0, 1, 0, 0, 1, 0, 0], dataPIN, clockPIN, latchPIN)
+shift_update([0, 0, 1, 0, 0, 1, 0, 0], dataPIN, clockPIN, latchPIN)
+shift_update([0, 0, 1, 0, 0, 1, 0, 0], dataPIN, clockPIN, latchPIN)
 shift_latch(clockPIN, latchPIN)
 time.sleep(1000)
 
