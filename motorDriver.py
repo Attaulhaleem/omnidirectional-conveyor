@@ -5,7 +5,7 @@ import motor
 GPIO.setwarnings(False)  # remove pin usage warnings
 motor.setup()
 
-daisy_chain = 5
+daisy_chain = 3
 state_list = [[motor.FORWARD, motor.FORWARD, motor.FORWARD] for i in range(daisy_chain)]
 data_list = motor.getChainedBinaryList(daisy_chain, state_list)
 motor.shiftOut(daisy_chain, data_list)
