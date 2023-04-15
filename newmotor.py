@@ -29,14 +29,14 @@ def shift_update(input, data, clock, latch):
     GPIO.output(clock, 1)
 
 
-# for i in range(8):
-#     data = [0 for _ in range(8)]
-#     data[i] = 1
-#     shift_update(data, dataPIN, clockPIN, latchPIN)
-#     time.sleep(5)
+for i in range(8):
+    data = [0 for _ in range(8)]
+    data[i] = 1
+    shift_update(data, dataPIN, clockPIN, latchPIN)
+    time.sleep(5)
 
-shift_update([0, 1, 1, 0, 0, 0, 0, 1], dataPIN, clockPIN, latchPIN)
-time.sleep(1000)
+# shift_update([0, 1, 1, 0, 0, 0, 0, 1], dataPIN, clockPIN, latchPIN)
+# time.sleep(1000)
 
 # PINs final cleaning
 GPIO.cleanup()
