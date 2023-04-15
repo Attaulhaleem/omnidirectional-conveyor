@@ -30,7 +30,9 @@ def shift_update(input, data, clock, latch):
 
 
 for i in range(8):
-    shift_update(1 << i, dataPIN, clockPIN, latchPIN)
+    data = [0 for _ in range(8)]
+    data[i] = 1
+    shift_update(data, dataPIN, clockPIN, latchPIN)
     time.sleep(1000)
 
 # PINs final cleaning
