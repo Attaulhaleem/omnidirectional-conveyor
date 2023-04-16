@@ -60,12 +60,10 @@ def getSingleBinaryList(state_list):
     return [motor_values[i] for i in shield_config]
 
 
-def getChainedBinaryList(daisy_chain, state_list):
+def getChainedBinaryList(state_list):
     """
     Format data for writing to daisy chained shift registers
     """
-    if len(state_list) != daisy_chain:
-        raise Exception("State list must contain {} sub lists.".format(daisy_chain))
     motor_values = list()
     for sub_list in state_list:
         motor_values.append(getSingleBinaryList(sub_list))
