@@ -3,8 +3,8 @@ import time
 
 # define PINs according to cabling
 dataPIN = 11
-latchPIN = 13
-clockPIN = 15
+clockPIN = 13
+latchPIN = 15
 
 # delay for level change (seconds)
 delay = 0.001
