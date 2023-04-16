@@ -60,10 +60,10 @@ def shift_update(input):
 #     # GPIO.output(clock, 1)
 
 
-shift_update([0, 0, 1, 0, 0, 1, 0, 0], dataPIN, clockPIN, latchPIN)
-shift_update([0, 0, 1, 0, 0, 1, 0, 0], dataPIN, clockPIN, latchPIN)
-shift_update([0, 0, 1, 0, 0, 1, 0, 0], dataPIN, clockPIN, latchPIN)
-shift_update([0, 0, 1, 0, 0, 1, 0, 0], dataPIN, clockPIN, latchPIN)
+shift_update([0, 0, 1, 0, 0, 1, 0, 0])
+shift_update([0, 0, 1, 0, 0, 1, 0, 0])
+shift_update([0, 0, 1, 0, 0, 1, 0, 0])
+shift_update([0, 0, 1, 0, 0, 1, 0, 0])
 pulse_latch()
 time.sleep(1000)
 
