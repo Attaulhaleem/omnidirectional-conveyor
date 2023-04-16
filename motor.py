@@ -121,5 +121,4 @@ SampleStates = [
     [RELEASE, RELEASE, RELEASE],
 ]
 
-ChainedSampleStates = [CLOCKWISE for _ in range(10)]
-print(ChainedSampleStates)
+ChainedSampleStates = [[CLOCKWISE] for _ in range(10)]
