@@ -122,4 +122,4 @@ SampleStates = [
     [RELEASE, RELEASE, RELEASE],
 ]
 
-ChainedSampleStates = [[CLOCKWISE] for _ in range(10)]
+ChainedSampleStates = [CLOCKWISE for _ in range(10)]
