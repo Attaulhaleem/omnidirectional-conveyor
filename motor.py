@@ -30,7 +30,7 @@ def setup():
     """
     GPIO.setup((latch_pin, data_pin, clock_pin), GPIO.OUT)
     GPIO.output((latch_pin, data_pin, clock_pin), GPIO.LOW)
-    clear()
+    clear(10)
 
 
 def pulse(pin, delay=0.001):
