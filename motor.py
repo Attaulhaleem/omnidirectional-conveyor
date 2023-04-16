@@ -5,9 +5,9 @@ import time
 GPIO.setmode(GPIO.BOARD)
 
 # shift register pins
-latch_pin = 11
-data_pin = 13
-clock_pin = 15
+data_pin = 11
+clock_pin = 13
+latch_pin = 15
 
 # motor states
 FORWARD = (1, 0)
@@ -28,9 +28,17 @@ def setup():
     """
     Pin Declarations (DS, SH, ST)
     """
-    GPIO.setup(latch_pin, GPIO.OUT)
-    GPIO.setup(data_pin, GPIO.OUT)
-    GPIO.setup(clock_pin, GPIO.OUT)
+    GPIO.setup((latch_pin, data_pin, clock_pin), GPIO.OUT)
+    GPIO.output((latch_pin, data_pin, clock_pin), GPIO.LOW)
+
+
+def pulse(pin, delay=0.001):
+    GPIO.output(pin, GPIO.LOW)
+    time.sleep(delay)
+    GPIO.output(pin, GPIO.HIGH)
+    time.sleep(delay)
+    GPIO.output(pin, GPIO.LOW)
+    time.sleep(delay)
 
 
 def getSingleBinaryList(state_list):
@@ -64,37 +72,25 @@ def getChainedBinaryList(daisy_chain, state_list):
     # first motor values must be sent last
     motor_values.reverse()
     # convert to flat list
-    motor_values = [val for sub_list in motor_values for val in sub_list]
+    motor_values = [
+        val for sub_list in motor_values for state in sub_list for val in state
+    ]
     return motor_values
 
 
-def shiftOut(daisy_chain, data_list):
+def shiftOut(data_list):
     """
     Writes data to shift register
     """
-    if len(data_list) != 8 * daisy_chain:
-        raise Exception("Input list must contain {} integers.".format(8 * daisy_chain))
     for d in data_list:
         if d not in (0, 1):
             raise Exception("Input data must be in binary format.")
-    GPIO.output(clock_pin, GPIO.LOW)
-    GPIO.output(latch_pin, GPIO.LOW)
     # send serial data
     for d in data_list:
         GPIO.output(data_pin, d)  # write one bit to data pin
-        GPIO.output(clock_pin, GPIO.LOW)  # pull clock pin LOW
-        time.sleep(0.01)  # wait for 10 ms
-        GPIO.output(clock_pin, GPIO.HIGH)  # pull clock pin HIGH to send rising edge
-    # show data on output pins
-    GPIO.output(latch_pin, GPIO.HIGH)  # pull latch pin HIGH
-    time.sleep(0.01)  # wait for 10 ms
-    GPIO.output(latch_pin, GPIO.LOW)  # pull latch pin LOW
-
-
-# def writeMotors():
-#     # list for storing current states of motor
-#     current_state = [IDLE_STATE for _ in range(10)]
-#     return
+        pulse(clock_pin)
+    # show data on output
+    pulse(latch_pin)
 
 
 SampleStates = [

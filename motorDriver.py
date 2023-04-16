@@ -2,13 +2,10 @@ import RPi.GPIO as GPIO
 import time
 import motor
 
-GPIO.setwarnings(False)  # remove pin usage warnings
 motor.setup()
 
-daisy_chain = 3
-state_list = [[motor.FORWARD, motor.FORWARD, motor.FORWARD] for i in range(daisy_chain)]
-data_list = motor.getChainedBinaryList(daisy_chain, state_list)
-motor.shiftOut(daisy_chain, data_list)
+data_list = motor.getChainedBinaryList(motor.ChainedSampleStates)
+motor.shiftOut(data_list)
 time.sleep(100)
 
 GPIO.cleanup()
