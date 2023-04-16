@@ -52,6 +52,14 @@ def shift_update(input):
         # time.sleep(0.01)
 
 
+def clear(bytes):
+    for _ in range(bytes):
+        for i in range(7, -1, -1):
+            GPIO.output(dataPIN, GPIO.LOW)
+            pulse_clock()
+    pulse_latch()
+
+
 # def shift_latch(clock, latch):
 #     # put latch up to store data on register
 #     # GPIO.output(clock, 0)
@@ -60,6 +68,7 @@ def shift_update(input):
 #     # GPIO.output(clock, 1)
 
 
+clear(4)
 shift_update([0, 0, 1, 0, 0, 1, 0, 0])
 shift_update([0, 0, 1, 0, 0, 1, 0, 0])
 shift_update([0, 0, 1, 0, 0, 1, 0, 0])
