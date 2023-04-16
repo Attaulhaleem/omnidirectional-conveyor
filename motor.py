@@ -50,7 +50,7 @@ def getSingleBinaryList(state_list):
     """
     print(state_list)
     if len(state_list) != 4:
-        raise Exception("Input list must contain 3 motor states.")
+        raise Exception("Input list must contain 4 motor states.")
     for state in state_list:
         if state not in (FORWARD, BACKWARD, RELEASE):
             raise Exception("Invalid motor state in input list.")
