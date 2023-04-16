@@ -57,6 +57,7 @@ def getSingleBinaryList(state_list):
     # see shield schematic [M3 and M4 were replaced on my shield] (http://wiki.sunfounder.cc/images/f/ff/L293D_schematic.png)
     # output format [3A, 4B, 3B, 2B, 1B, 1A, 2A, 4A]
     shield_config = (4, 7, 5, 3, 1, 0, 2, 6)
+    print([motor_values[i] for i in shield_config])
     return [motor_values[i] for i in shield_config]
 
 
