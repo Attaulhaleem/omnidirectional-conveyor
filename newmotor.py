@@ -70,7 +70,7 @@ def clear(bytes):
 
 clear(4)
 shift_update([0, 0, 1, 0, 0, 0, 0, 0])
-shift_update([1, 0, 0, 0, 0, 0, 0, 0])
+shift_update([0, 1, 0, 0, 0, 0, 0, 0])
 shift_update([0, 0, 0, 0, 0, 0, 0, 1])
 shift_update([0, 0, 1, 0, 0, 1, 0, 0])
 pulse_latch()
