@@ -71,9 +71,7 @@ def getChainedBinaryList(state_list):
     # first motor values must be sent last
     motor_values.reverse()
     # convert to flat list
-    motor_values = [
-        val for sub_list in motor_values for state in sub_list for val in state
-    ]
+    motor_values = [val for sub_list in motor_values for val in sub_list]
     return motor_values
 
 
