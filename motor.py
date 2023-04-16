@@ -97,15 +97,13 @@ def clear(bytes):
 
 
 SampleStates = [
-    IDLE,
+    CLOCKWISE,
+    ANTI_CLOCKWISE,
     UP_RIGHT,
     RIGHT,
     DOWN_RIGHT,
     DOWN_LEFT,
     LEFT,
     UP_LEFT,
-    CLOCKWISE,
-    ANTI_CLOCKWISE,
+    IDLE,
 ]
-
-ChainedSampleStates = [CLOCKWISE for _ in range(10)]
