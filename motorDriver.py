@@ -4,7 +4,7 @@ import motor
 
 motor.setup()
 
-data_list = motor.getChainedBinaryList(motor.SampleStates)
+data_list = motor.getChainedBinaryList([motor.CLOCKWISE for _ in range(4)])
 motor.shiftOut(data_list)
 time.sleep(100)
 
