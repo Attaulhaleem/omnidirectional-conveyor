@@ -122,3 +122,4 @@ SampleStates = [
 ]
 
 ChainedSampleStates = [CLOCKWISE for _ in range(10)]
+print(ChainedSampleStates)
