@@ -48,6 +48,7 @@ def getSingleBinaryList(state_list):
     """
     Format data for writing to single shift register
     """
+    print(state_list)
     if len(state_list) != 3:
         raise Exception("Input list must contain 3 motor states.")
     # fourth motor is not used
