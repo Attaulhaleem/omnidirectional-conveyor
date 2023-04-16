@@ -7,7 +7,7 @@ latchPIN = 13
 clockPIN = 15
 
 # delay for level change (seconds)
-delay = 0.01
+delay = 0.001
 
 # set pins to putput
 GPIO.setmode(GPIO.BOARD)
