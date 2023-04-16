@@ -30,6 +30,7 @@ def setup():
     """
     GPIO.setup((latch_pin, data_pin, clock_pin), GPIO.OUT)
     GPIO.output((latch_pin, data_pin, clock_pin), GPIO.LOW)
+    clear()
 
 
 def pulse(pin, delay=0.001):
@@ -88,6 +89,10 @@ def shiftOut(data_list):
         pulse(clock_pin)
     # show data on output
     pulse(latch_pin)
+
+
+def clear(bytes):
+    shiftOut([0 for _ in range(bytes * 8)])
 
 
 SampleStates = [
