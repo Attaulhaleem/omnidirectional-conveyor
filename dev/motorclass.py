@@ -44,7 +44,7 @@ class Module:
         """Get module motors which are currently under the package"""
         pass
 
-    def get_binary_list(state_list):
+    def get_binary_list(self, state_list):
         """Format data for writing byte to shift register"""
         print(state_list)
         if len(state_list) != 4:
@@ -70,7 +70,7 @@ class Omniveyor:
         GPIO.setup((latch_pin, data_pin, clock_pin), GPIO.OUT)
         GPIO.output((latch_pin, data_pin, clock_pin), GPIO.LOW)
 
-    def pulse(pin, delay=0.001):
+    def pulse(self, pin, delay=0.001):
         GPIO.output(pin, GPIO.LOW)
         time.sleep(delay)
         GPIO.output(pin, GPIO.HIGH)
@@ -78,7 +78,7 @@ class Omniveyor:
         GPIO.output(pin, GPIO.LOW)
         time.sleep(delay)
 
-    def getChainedBinaryList(state_list):
+    def getChainedBinaryList(self, state_list):
         """Format data for writing multiple bytes to daisy-chained shift registers"""
         motor_values = list()
         for sub_list in state_list:
