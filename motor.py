@@ -92,7 +92,7 @@ def shiftOut(data_list):
     pulse(latch_pin)
 
 
-def clear(bytes):
+def clear(bytes=10):
     shiftOut([0 for _ in range(bytes * 8)])
 
 
