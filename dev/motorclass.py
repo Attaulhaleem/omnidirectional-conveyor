@@ -82,7 +82,7 @@ class Omniveyor:
         """Format data for writing multiple bytes to daisy-chained shift registers"""
         motor_values = list()
         for sub_list in state_list:
-            motor_values.append(Module.getSingleBinaryList(sub_list))
+            motor_values.append(Module.get_binary_list(sub_list))
         # first motor values must be sent last
         motor_values.reverse()
         # convert to flat list
