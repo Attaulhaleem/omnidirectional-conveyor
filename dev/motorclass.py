@@ -62,9 +62,9 @@ class Module:
 
 class Omniveyor:
     def __init__(self, data_pin, clock_pin, latch_pin, modules):
-        self.data_pin = data_pin
-        self.clock_pin = clock_pin
-        self.latch_pin = latch_pin
+        self.data_pin = int(data_pin)
+        self.clock_pin = int(clock_pin)
+        self.latch_pin = int(latch_pin)
         self.modules = modules
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup((latch_pin, data_pin, clock_pin), GPIO.OUT)
