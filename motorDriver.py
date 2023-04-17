@@ -12,6 +12,6 @@ while True:
         time.sleep(1)
     except KeyboardInterrupt:
         print("Manually exiting program!")
-        motor.clear(4)
+        motor.clear()
         GPIO.cleanup()
         raise SystemExit
