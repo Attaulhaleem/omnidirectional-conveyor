@@ -115,3 +115,8 @@ class Omniveyor:
         Module.UP_LEFT,
         Module.IDLE,
     ]
+
+
+omniveyor = Omniveyor(11, 13, 15, 10)
+data_list = omniveyor.getChainedBinaryList([Module.CLOCKWISE for _ in range(4)])
+omniveyor.shiftOut(data_list)
