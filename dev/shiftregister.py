@@ -14,6 +14,7 @@ class ShiftRegister:
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup((latch_pin, data_pin, clock_pin), GPIO.OUT)
         GPIO.output((latch_pin, data_pin, clock_pin), GPIO.LOW)
+        self.clear()
 
     def pulse(self, pin):
         GPIO.output(pin, GPIO.LOW)
@@ -38,6 +39,8 @@ class ShiftRegister:
             self.pulse(self.clock_pin)
         # show data on output
         self.pulse(self.latch_pin)
+        # save current output of shift register
+        self.output = data_list
 
     def clear(self):
         self.shiftOut([0 for _ in range(self.daisy_chain * 8)])
