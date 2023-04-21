@@ -1,5 +1,4 @@
-import RPi.GPIO as GPIO
-import time
+from shiftregister import ShiftRegister
 
 
 class Motor:
@@ -37,16 +36,15 @@ class Module:
         self.motors = (Motor(motor_positions[i]) for i in range(3))
         self.action = self.IDLE
 
-    def set_state(self, action):
+    def set_action(self, action):
         self.action = action
 
-    def __get_underlying_motors(self, bounding_box):
+    def get_underlying_motors(self, bounding_box):
         """Get module motors which are currently under the package"""
         pass
 
     def get_binary_list(self, state_list):
         """Format data for writing byte to shift register"""
-        print(state_list)
         if len(state_list) != 4:
             raise Exception("Input list must contain 4 motor states.")
         for state in state_list:
@@ -61,25 +59,20 @@ class Module:
 
 
 class Omniveyor:
-    def __init__(self, data_pin, clock_pin, latch_pin, modules):
-        self.data_pin = int(data_pin)
-        self.clock_pin = int(clock_pin)
-        self.latch_pin = int(latch_pin)
-        self.modules = modules
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup((latch_pin, data_pin, clock_pin), GPIO.OUT)
-        GPIO.output((latch_pin, data_pin, clock_pin), GPIO.LOW)
+    def __init__(self, num_of_modules, motor_positions):
+        self.num_of_modules = num_of_modules
+        self.modules = (Module(motor_positions[i]) for i in range(num_of_modules))
+        self.sr = ShiftRegister(daisy_chain=num_of_modules)
+        self.sr.clear()
 
-    def pulse(self, pin, delay=0.001):
-        GPIO.output(pin, GPIO.LOW)
-        time.sleep(delay)
-        GPIO.output(pin, GPIO.HIGH)
-        time.sleep(delay)
-        GPIO.output(pin, GPIO.LOW)
-        time.sleep(delay)
-
-    def getChainedBinaryList(self, state_list):
+    def get_chained_binary_list(self, state_list):
         """Format data for writing multiple bytes to daisy-chained shift registers"""
+        # input validation
+        if len(state_list) != self.num_of_modules:
+            raise Exception(
+                "State list must contain {} module states!".format(self.num_of_modules)
+            )
+        # get binary list for all modules
         motor_values = list()
         for sub_list in state_list:
             motor_values.append(Module.get_binary_list(self, sub_list))
@@ -89,20 +82,9 @@ class Omniveyor:
         motor_values = [val for sub_list in motor_values for val in sub_list]
         return motor_values
 
-    def shiftOut(self, data_list):
-        """Writes data to shift register(s)"""
-        for d in data_list:
-            if d not in (0, 1):
-                raise Exception("Input data must be in binary format.")
-        # send serial data
-        for d in data_list:
-            GPIO.output(self.data_pin, d)  # write one bit to data pin
-            self.pulse(self.clock_pin)
-        # show data on output
-        self.pulse(self.latch_pin)
-
-    def clear(self):
-        self.shiftOut([0 for _ in range(self.modules * 8)])
+    def move(self, state_list):
+        data_list = self.get_chained_binary_list(state_list)
+        self.sr.shift_out(data_list)
 
     SampleStates = [
         Module.CLOCKWISE,
@@ -117,6 +99,6 @@ class Omniveyor:
     ]
 
 
-omniveyor = Omniveyor(11, 13, 15, 10)
-dlist = omniveyor.getChainedBinaryList(state_list=[Module.CLOCKWISE for _ in range(4)])
-omniveyor.shiftOut(data_list=dlist)
+motorPositions = [[(0, 0) for i in range(3)] for j in range(10)]
+omniveyor = Omniveyor(10, motorPositions)
+omniveyor.move([Module.CLOCKWISE for _ in range(4)])
