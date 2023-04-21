@@ -3,6 +3,8 @@ from time import sleep
 
 
 class ShiftRegister:
+    """Class for writing data to daisy-chained 74HC595 shift register(s)."""
+
     def __init__(
         self, data_pin=11, clock_pin=13, latch_pin=15, daisy_chain=10, delay=0.001
     ):
@@ -17,6 +19,7 @@ class ShiftRegister:
         self.clear()
 
     def pulse(self, pin):
+        """Give a rising edge to a pin."""
         GPIO.output(pin, GPIO.LOW)
         sleep(self.delay)
         GPIO.output(pin, GPIO.HIGH)
@@ -24,9 +27,10 @@ class ShiftRegister:
         GPIO.output(pin, GPIO.LOW)
         sleep(self.delay)
 
-    def shiftOut(self, data_list):
-        """Writes data to shift register(s)"""
-        if len(data_list) != 8 * self.daisy_chain:
+    def shift_out(self, data_list):
+        """Shift out and latch data to shift register(s)."""
+        # input validation
+        if len(data_list) != self.daisy_chain * 8:
             raise Exception(
                 "Input data must contain {} bytes!".format(self.daisy_chain)
             )
@@ -35,7 +39,8 @@ class ShiftRegister:
                 raise Exception("Input data must be in binary format.")
         # send serial data
         for d in data_list:
-            GPIO.output(self.data_pin, d)  # write one bit to data pin
+            # write one bit to data pin
+            GPIO.output(self.data_pin, d)
             self.pulse(self.clock_pin)
         # show data on output
         self.pulse(self.latch_pin)
@@ -43,4 +48,5 @@ class ShiftRegister:
         self.output = data_list
 
     def clear(self):
-        self.shiftOut([0 for _ in range(self.daisy_chain * 8)])
+        """Clear the output of shift register(s)."""
+        self.shift_out([0 for _ in range(self.daisy_chain * 8)])
