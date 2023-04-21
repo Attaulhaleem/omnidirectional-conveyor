@@ -3,7 +3,9 @@ from time import sleep
 
 
 class ShiftRegister:
-    def __init__(self, data_pin, clock_pin, latch_pin, daisy_chain, delay=0.001):
+    def __init__(
+        self, data_pin=11, clock_pin=13, latch_pin=15, daisy_chain=10, delay=0.001
+    ):
         self.data_pin = data_pin
         self.clock_pin = clock_pin
         self.latch_pin = latch_pin
