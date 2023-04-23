@@ -5,3 +5,8 @@ __pycache__/hexagon.cpython-39.pyc
 __pycache__/videofeed.cpython-311.pyc
 test.py
 dev/__pycache__/motor.cpython-311.pyc
+__pycache__/gui.cpython-311.pyc
+__pycache__/motorshield.cpython-311.pyc
+dev/__pycache__/module.cpython-311.pyc
+dev/__pycache__/omniveyor.cpython-311.pyc
+dev/__pycache__/shiftregister.cpython-311.pyc
