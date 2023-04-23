@@ -1,17 +1,17 @@
 import RPi.GPIO as GPIO
 import time
-import motor
+import motorshield
 
-motor.setup()
+motorshield.setup()
 
-data_list = motor.getChainedBinaryList([motor.CLOCKWISE for _ in range(4)])
-motor.shiftOut(data_list)
+data_list = motorshield.getChainedBinaryList([motorshield.CLOCKWISE for _ in range(4)])
+motorshield.shiftOut(data_list)
 
 while True:
     try:
         time.sleep(1)
     except KeyboardInterrupt:
         print("Manually exiting program!")
-        motor.clear()
+        motorshield.clear()
         GPIO.cleanup()
         raise SystemExit
