@@ -62,7 +62,7 @@ class Omniveyor:
     def __init__(self, num_of_modules, motor_positions):
         self.num_of_modules = num_of_modules
         self.modules = (Module(motor_positions[i]) for i in range(num_of_modules))
-        self.sr = ShiftRegister(daisy_chain=num_of_modules)
+        self.sr = ShiftRegister(11, 13, 15, num_of_modules)
         self.sr.clear()
 
     def get_chained_binary_list(self, state_list):
