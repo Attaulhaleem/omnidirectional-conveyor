@@ -24,8 +24,8 @@ class Module:
         """Initialize a module.
 
         Args:
-            position (tuple(int, int)): (x, y) position of module in pi camera frame.
-            action (tuple(tuple(int, int), tuple(int, int), tuple(int, int)), optional): Current action performed by the module. Defaults to ACTIONS["idle"].
+            position (tuple[int, int]): (x, y) position of module in pi camera frame.
+            action (tuple[tuple[int, int], tuple[int, int], tuple[int, int]], optional): Current action performed by the module. Defaults to ACTIONS["idle"].
         """
         self.position = position
         self.motors = [
@@ -38,10 +38,10 @@ class Module:
         """Get the 3 motor positions in pi camera frame from the module center position.
 
         Args:
-            position (tuple(int, int)): Module center position in pi camera frame.
+            position (tuple[int, int]): Module center position in pi camera frame.
 
         Returns:
-            tuple(tuple(int, int), tuple(int, int), tuple(int, int)): A tuple of 3 motor positions.
+            tuple[tuple[int, int], tuple[int, int], tuple[int, int]]: A tuple of 3 motor positions.
         """
         return ((0, 0), (0, 0), (0, 0))
 
