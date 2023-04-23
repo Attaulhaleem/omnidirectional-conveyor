@@ -14,16 +14,19 @@ ACTIONS = {
 
 
 class Module:
-    """A module of the OmniVeyor. Manages the 3 motors in the module."""
+    """A module of the Omniveyor. Consists of 3 motors controlled by the L293D Motor Driver Shield."""
 
     # see shield schematic [M3 and M4 were replaced on my shield] (http://wiki.sunfounder.cc/images/f/ff/L293D_schematic.png)
     # output format [3A, 4B, 3B, 2B, 1B, 1A, 2A, 4A]
     PIN_CONFIG = ((5, 4), (6, 3), (0, 2))  # motor pins on shift register output
 
     def __init__(self, position, action=ACTIONS["idle"]):
-        """Initialize a module (containing 3 motors).
-        position: module center position in pi camera frame
-        action: any action from ACTIONS"""
+        """Initialize a module.
+
+        Args:
+            position (tuple(int, int)): (x, y) position of module in pi camera frame.
+            action (tuple(tuple(int, int), tuple(int, int), tuple(int, int)), optional): Current action performed by the module. Defaults to ACTIONS["idle"].
+        """
         self.position = position
         self.motors = [
             Motor(self.PIN_CONFIG[i], self.get_motor_positions(position)[i])
@@ -32,13 +35,25 @@ class Module:
         self.set_action(action)
 
     def get_motor_positions(self, position):
-        """Find the 3 motor positions from the module position.
-        position: module center position in pi camera frame"""
+        """Get the 3 motor positions in pi camera frame from the module center position.
+
+        Args:
+            position (tuple(int, int)): Module center position in pi camera frame.
+
+        Returns:
+            tuple(tuple(int, int), tuple(int, int), tuple(int, int)): A tuple of 3 motor positions.
+        """
         return ((0, 0), (0, 0), (0, 0))
 
     def set_action(self, action):
-        """Set module action (and corresponding motor states).
-        action: any action in ACTIONS"""
+        """Set module action and corresponding motor states. Also update shift register data.
+
+        Args:
+            action (tuple[tuple[int, int], tuple[int, int], tuple[int, int]]): Any action in ACTIONS.
+
+        Raises:
+            Exception: Action is not in ACTIONS.
+        """
         if action not in ACTIONS.values():
             raise Exception("Invalid module action!")
         for i, motor in enumerate(self.motors):
@@ -48,7 +63,7 @@ class Module:
         self.encode_sr_data()
 
     def encode_sr_data(self):
-        """Encode the current module action as data for writing to shift register."""
+        """Encode the motor states as data for writing to shift register."""
         # initialize empty byte
         data_list = [0 for _ in range(8)]
         for motor in self.motors:
@@ -57,11 +72,9 @@ class Module:
         self.sr_data = data_list
 
     def get_underlying_motors(self, bounding_box):
-        """Get module motors which are currently under the package"""
+        """Identify which motors lie under the bounding box.
+
+        Args:
+            bounding_box (tuple[int, int, int, int]): The bounding box (x, y, w, h) of the package.
+        """
         pass
-
-
-mod = Module((0, 0), ACTIONS["anti_clockwise"])
-print(mod.sr_data)
-mod.set_action(ACTIONS["clockwise"])
-print(mod.sr_data)
