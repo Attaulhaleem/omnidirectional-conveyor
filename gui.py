@@ -84,7 +84,7 @@ HEADING_FONT = ("TkHeadingFont", 14)
 BODY_FONT = ("TkTextFont", 10)
 
 """ IMAGE SIZES """
-TITLE_ICON_SIZE = (120, 120)
+TITLE_ICON_SIZE = (200, 160)
 HEADING_ICON_SIZE = (50, 50)
 BUTTON_ICON_SIZE = (30, 30)
 
@@ -101,7 +101,7 @@ normal_frame_style.configure("Normal.TFrame", padding=5)
 title_frame = ttk.Frame(main_frame, style="Normal.TFrame")
 
 # load and resize title image
-title_image = Image.open(assets_path + "hex_box_blue.png")
+title_image = Image.open(assets_path + "conveyor.png")
 title_image = title_image.resize(TITLE_ICON_SIZE)
 title_image = ImageTk.PhotoImage(title_image)
 # add image to label
@@ -110,7 +110,7 @@ title_image_label = ttk.Label(title_frame, anchor="w", image=title_image)
 # title label
 title_text_label = ttk.Label(
     title_frame,
-    text="OmniVeyor GUI",
+    text="Omniveyor GUI",
     font=TITLE_FONT,
     anchor="center",
 )
