@@ -60,16 +60,16 @@ class Module:
             motor.set_state(action[i])
         # set action before encoding data for SR
         self.action = action
-        self.encode_sr_data()
+        self.encode_sr_byte()
 
-    def encode_sr_data(self):
+    def encode_sr_byte(self):
         """Encode the motor states as data for writing to shift register."""
         # initialize empty byte
         data_list = [0 for _ in range(8)]
         for motor in self.motors:
             for i in range(2):
                 data_list[motor.pins[i]] = motor.state[i]
-        self.sr_data = data_list
+        self.sr_byte = data_list
 
     def get_underlying_motors(self, bounding_box):
         """Identify which motors lie under the bounding box.
