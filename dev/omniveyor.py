@@ -1,4 +1,4 @@
-from shiftregister import ShiftRegister
+# from shiftregister import ShiftRegister
 from module import *
 
 
@@ -21,8 +21,8 @@ class Omniveyor:
                 "Positions must contain data for {} modules!".format(num_of_modules)
             )
         self.modules = [Module(positions[i]) for i in range(num_of_modules)]
-        self.sr = ShiftRegister(11, 13, 15, num_of_modules)
-        self.sr.clear()
+        # self.sr = ShiftRegister(11, 13, 15, num_of_modules)
+        # self.sr.clear()
 
 
 omni = Omniveyor(10, [(0, 0) for _ in range(10)])
