@@ -49,7 +49,7 @@ def drawShortestPath():
     path_move_button.state(["disabled"])
     if path_src.get() == path_dest.get():
         path_text.set("")
-        messagebox.showinfo("Error", "Start and end points cannot be the same!")
+        messagebox.showerror("Error", "Start and end points cannot be the same!")
         return
     path_list = grid.get_path_indexes(path_src.get(), path_dest.get())
     path_text.set(" -> ".join(map(str, path_list)))
