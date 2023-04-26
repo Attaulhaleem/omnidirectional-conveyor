@@ -288,13 +288,15 @@ title_frame.rowconfigure(1, weight=1)
 display_frame.columnconfigure(0, weight=1)
 display_frame.columnconfigure(1, weight=1)
 display_frame.columnconfigure(2, weight=1)
-display_frame.rowconfigure(0, weight=1)
-display_frame.rowconfigure(1, weight=1)
+display_frame.rowconfigure(0, weight=5)
+display_frame.rowconfigure(1, weight=5)
 
 path_frame.columnconfigure(0, weight=1)
 path_frame.columnconfigure(1, weight=1)
 path_frame.columnconfigure(2, weight=1)
 path_frame.columnconfigure(3, weight=1)
+path_frame.rowconfigure(0, weight=3)
+path_frame.rowconfigure(1, weight=3)
 
 
 root.mainloop()
