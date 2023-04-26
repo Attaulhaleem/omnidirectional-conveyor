@@ -24,6 +24,13 @@ class Omniveyor:
         # self.sr = ShiftRegister(11, 13, 15, num_of_modules)
         # self.sr.clear()
 
+    def update_sr_data(self):
+        """Chain the individual module bytes to write to shift register(s)."""
+        for module in self.modules:
+            self.sr_data.append(module.sr_byte)
+        # first motor data must be sent last
+        self.sr_data.reverse()
+
 
 omni = Omniveyor(10, [(0, 0) for _ in range(10)])
 print(omni)
