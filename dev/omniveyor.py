@@ -1,4 +1,4 @@
-# from shiftregister import ShiftRegister
+# from shift_register import ShiftRegister
 from module import *
 from hexgrid import HexGrid
 
