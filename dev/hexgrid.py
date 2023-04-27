@@ -68,7 +68,8 @@ class HexGrid:
     def get_path_indexes(self, start, goal):
         frontier = Queue()
         frontier.put(start)
-        came_from = dict()  # path A->B stored as came_from[B] == A
+        came_from = dict()
+        # path A->B stored as came_from[B] == A
         came_from[start] = None
         while not frontier.empty():
             current = frontier.get()
