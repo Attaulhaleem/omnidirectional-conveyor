@@ -1,6 +1,6 @@
 # from shift_register import ShiftRegister
 from module import *
-from hexgrid import HexGrid
+from hex_grid import HexGrid
 
 
 class Omniveyor:
