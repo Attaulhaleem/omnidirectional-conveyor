@@ -30,11 +30,11 @@ def clearManualPath(e):
 def drawManualPath(e):
     if not manual_path.get():
         return
-    index = grid.get_nearest_index((e.x, e.y))
+    index = hex_grid.get_nearest_index((e.x, e.y))
     if len(path_list) == 0 or path_list[-1] != index:
         path_list.append(index)
         path_text.set(" -> ".join(map(str, path_list)))
-    x, y = grid.hexagons[index].position
+    x, y = hex_grid.hexagons[index].position
     if hexagons_canvas.old_coords is not None:
         x1, y1 = hexagons_canvas.old_coords
         hexagons_canvas.create_line(
@@ -51,9 +51,9 @@ def drawShortestPath():
         path_text.set("")
         messagebox.showerror("Error", "Start and end points cannot be the same!")
         return
-    path_list = grid.get_path_indexes(path_src.get(), path_dest.get())
+    path_list = hex_grid.get_path_indexes(path_src.get(), path_dest.get())
     path_text.set(" -> ".join(map(str, path_list)))
-    path_positions = [val for i in path_list for val in grid.hexagons[i].position]
+    path_positions = [val for i in path_list for val in hex_grid.hexagons[i].position]
     hexagons_canvas.create_line(
         path_positions, arrow="last", capstyle="round", tags="lines", width=3
     )
@@ -94,8 +94,9 @@ root.attributes("-fullscreen", True)
 main_frame = ttk.Frame(root, padding=10)
 
 """ TEMPLATE """
-normal_frame_style = ttk.Style()
-normal_frame_style.configure("Normal.TFrame", padding=5)
+# normal_frame_style = ttk.Style()
+# normal_frame_style.configure("Normal.TFrame", padding=5)
+ttk.Style().configure("Normal.TFrame", padding=5)
 
 """ TITLE """
 title_frame = ttk.Frame(main_frame, style="Normal.TFrame")
@@ -133,8 +134,8 @@ hexagons_canvas = Canvas(
 hexagons_canvas.tag_bind("hexagon", "<Button-1>", clearManualPath)
 hexagons_canvas.tag_bind("hexagon", "<B1-Motion>", drawManualPath)
 
-grid = Omniveyor().grid
-for hexagon in grid.hexagons:
+hex_grid = Omniveyor().hex_grid
+for hexagon in hex_grid.hexagons:
     hexagons_canvas.create_polygon(
         hexagon.points,
         fill="#00a1af",

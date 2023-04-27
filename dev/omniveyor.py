@@ -6,8 +6,8 @@ from hex_grid import HexGrid
 class Omniveyor:
     def __init__(self):
         positions = [(0, 0) for _ in range(10)]
-        self.grid = HexGrid(50, 3, 4, False, True, 10, 10)
-        self.num_of_modules = len(self.grid.hexagons)
+        self.hex_grid = HexGrid(50, 3, 4, False, True, 10, 10)
+        self.num_of_modules = len(self.hex_grid.hexagons)
         if len(positions) != self.num_of_modules:
             raise Exception(
                 "Positions must contain data for {} modules!".format(
@@ -46,13 +46,15 @@ class Omniveyor:
                 continue
             # get first movement
             try:
-                movement = self.grid.get_path_indexes()[0:2]
+                movement = self.hex_grid.get_path_indexes()[0:2]
             except:
                 continue
             start = movement[0]
             goal = movement[1]
             # get direction for movement
-            dir = self.grid.hexagons[start].get_direction(self.grid.hexagons[goal])
+            dir = self.hex_grid.hexagons[start].get_direction(
+                self.hex_grid.hexagons[goal]
+            )
             # continue if direction does not exist
             if dir is None:
                 continue
