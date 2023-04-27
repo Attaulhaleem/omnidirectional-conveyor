@@ -15,13 +15,15 @@ class Hexagon:
 
     def set_diffs(self):
         if self.is_flat_top:
+            # pointy top rotated 90 deg clockwise becomes flat top
+            # y axis becomes x axis, x axis becomes -y axis
             self.diffs = {
-                "up_right": (1, -0.5),
-                "down_right": (1, 0.5),
-                "down": (0, 1),
-                "down_left": (-1, 0.5),
-                "up_left": (-1, -0.5),
-                "up": (0, -1),
+                "up_right": (1, 0.5),
+                "right": (0, 1),
+                "down_right": (-1, 0.5),
+                "down_left": (-1, -0.5),
+                "left": (0, -1),
+                "up_left": (1, -0.5),
             }
         else:
             self.diffs = {
