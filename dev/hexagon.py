@@ -65,23 +65,19 @@ class Hexagon:
                 floor(y + length),
             )
 
-    def is_neighbor(self, other):
-        c1 = self.coord
-        c2 = other.coord
-        dx = c1[0] - c2[0]
-        dy = c1[1] - c2[1]
-        for diff in self.diffs.values():
-            # use absolute difference for float comparison
-            if abs(dx - diff[0]) < 0.1 and abs(dy - diff[1]) < 0.1:
-                return True
-        return False
-
     def get_direction(self, goal):
         c2 = goal.coord
         c1 = self.coord
         dx = c2[0] - c1[0]
         dy = c2[1] - c1[1]
         for key, diff in self.diffs:
+            # use absolute difference for float comparison
             if abs(dx - diff[0]) < 0.1 and abs(dy - diff[1]) < 0.1:
                 return key
         return None
+
+    def is_neighbor(self, other):
+        if self.get_direction(other) is None:
+            return False
+        else:
+            return True
