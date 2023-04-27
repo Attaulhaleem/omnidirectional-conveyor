@@ -133,7 +133,7 @@ hexagons_canvas = Canvas(
 hexagons_canvas.tag_bind("hexagon", "<Button-1>", clearManualPath)
 hexagons_canvas.tag_bind("hexagon", "<B1-Motion>", drawManualPath)
 
-grid = HexGrid(50, 3, 4, 10, 10, False, True)
+grid = HexGrid(50, 3, 4, False, True, 10, 10)
 for hexagon in grid.hexagons:
     hexagons_canvas.create_polygon(
         hexagon.points,

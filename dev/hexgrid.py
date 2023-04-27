@@ -3,7 +3,7 @@ from queue import Queue
 
 
 class HexGrid:
-    def __init__(self, length, rows, cols, startx, starty, is_flat_top, is_odd_offset):
+    def __init__(self, length, rows, cols, is_flat_top, is_odd_offset, startx, starty):
         count = 0
         self.hexagons = []
         if is_flat_top:
