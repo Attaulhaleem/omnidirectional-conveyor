@@ -70,7 +70,7 @@ class Hexagon:
         c1 = self.coord
         dx = c2[0] - c1[0]
         dy = c2[1] - c1[1]
-        for key, diff in self.diffs:
+        for key, diff in self.diffs.items():
             # use absolute difference for float comparison
             if abs(dx - diff[0]) < 0.1 and abs(dy - diff[1]) < 0.1:
                 return key
