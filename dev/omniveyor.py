@@ -2,6 +2,8 @@
 from module import *
 from hex_grid import HexGrid
 
+# TODO: merge HexGrid into Omniveyor
+
 
 class Omniveyor:
     def __init__(self):
@@ -59,8 +61,3 @@ class Omniveyor:
             if dir is None:
                 continue
             module.set_action(ACTIONS[dir])
-
-
-omni = Omniveyor()
-omni.actuate()
-print(omni)
