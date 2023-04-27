@@ -9,11 +9,32 @@ class Hexagon:
         self.is_flat_top = is_flat_top
         self.id = id
         self.coord = coord
-        self.set_drawing_points(length, x, y, is_flat_top)
-        self.set_center_position(length, x, y, is_flat_top)
+        self.set_diffs()
+        self.set_drawing_points(length, x, y)
+        self.set_center_position(length, x, y)
 
-    def set_drawing_points(self, length, x, y, is_flat_top):
-        if is_flat_top:
+    def set_diffs(self):
+        if self.is_flat_top:
+            self.diffs = {
+                "up_right": (1, -0.5),
+                "down_right": (1, 0.5),
+                "down": (0, 1),
+                "down_left": (-1, 0.5),
+                "up_left": (-1, -0.5),
+                "up": (0, -1),
+            }
+        else:
+            self.diffs = {
+                "up_right": (0.5, -1),
+                "right": (1, 0),
+                "down_right": (0.5, 1),
+                "down_left": (-0.5, 1),
+                "left": (-1, 0),
+                "up_left": (-0.5, -1),
+            }
+
+    def set_drawing_points(self, length, x, y):
+        if self.is_flat_top:
             self.points = [
                 (x, y + 0.5 * SQRT_3 * length),
                 (x + 0.5 * length, y),
@@ -32,8 +53,8 @@ class Hexagon:
                 (x + SQRT_3 * length, y + 0.5 * length),
             ]
 
-    def set_center_position(self, length, x, y, is_flat_top):
-        if is_flat_top:
+    def set_center_position(self, length, x, y):
+        if self.is_flat_top:
             self.position = (
                 floor(x + length),
                 floor(y + 0.5 * SQRT_3 * length),
@@ -45,16 +66,22 @@ class Hexagon:
             )
 
     def is_neighbor(self, other):
-        if self.is_flat_top:
-            diffs = [(0, 1), (-1, 0.5), (-1, -0.5), (0, -1), (1, -0.5), (1, 0.5)]
-        else:
-            diffs = [(0.5, 1), (-0.5, 1), (-1, 0), (-0.5, -1), (0.5, -1), (1, 0)]
         c1 = self.coord
         c2 = other.coord
         dx = c1[0] - c2[0]
         dy = c1[1] - c2[1]
-        for diff in diffs:
+        for diff in self.diffs.values():
             # use absolute difference for float comparison
             if abs(dx - diff[0]) < 0.1 and abs(dy - diff[1]) < 0.1:
                 return True
         return False
+
+    def get_direction(self, goal):
+        c2 = goal.coord
+        c1 = self.coord
+        dx = c2[0] - c1[0]
+        dy = c2[1] - c1[1]
+        for key, diff in self.diffs:
+            if abs(dx - diff[0]) < 0.1 and abs(dy - diff[1]) < 0.1:
+                return key
+        return None
