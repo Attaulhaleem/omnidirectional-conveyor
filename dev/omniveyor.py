@@ -1,27 +1,30 @@
 # from shiftregister import ShiftRegister
 from module import *
+from hexgrid import HexGrid
 
 
 class Omniveyor:
     """A configurable conveyor consisting of multiple modules."""
 
-    def __init__(self, num_of_modules, positions):
+    def __init__(self, positions):
         """Initialize an Omniveyor.
 
         Args:
-            num_of_modules (integer): Number of concatenated modules in the conveyor.
             positions (list[tuple(int, int)]): Module center positions in pi camera frame.
 
         Raises:
             Exception: Length of error does not match number of modules.
         """
-        self.num_of_modules = num_of_modules
-        if len(positions) != num_of_modules:
+        self.grid = HexGrid(50, 3, 4, False, True, 10, 10)
+        self.num_of_modules = len(self.grid.hexagons)
+        if len(positions) != self.num_of_modules:
             raise Exception(
-                "Positions must contain data for {} modules!".format(num_of_modules)
+                "Positions must contain data for {} modules!".format(
+                    self.num_of_modules
+                )
             )
-        self.modules = [Module(positions[i]) for i in range(num_of_modules)]
-        # self.sr = ShiftRegister(11, 13, 15, num_of_modules)
+        self.modules = [Module(positions[i]) for i in range(self.num_of_modules)]
+        # self.sr = ShiftRegister(11, 13, 15, self.num_of_modules)
         # self.sr.clear()
 
     def update_sr_data(self):
@@ -39,6 +42,14 @@ class Omniveyor:
         """Actuate the Omniveyor motors according to their assigned states."""
         self.update_sr_data()
         # self.sr.shift_out(self.sr_data)
+
+    def set_module_states(self):
+        for module in self.modules:
+            # continue if module is not located under package
+            if module.get_underlying_motors() is None:
+                continue
+            # find the next action of the module
+            # next_action = self.grid.get_path_indexes()[:]
 
 
 omni = Omniveyor(10, [(0, 0) for _ in range(10)])
