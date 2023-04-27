@@ -6,7 +6,7 @@ from hexgrid import HexGrid
 class Omniveyor:
     """A configurable conveyor consisting of multiple modules."""
 
-    def __init__(self, positions):
+    def __init__(self):
         """Initialize an Omniveyor.
 
         Args:
@@ -15,6 +15,7 @@ class Omniveyor:
         Raises:
             Exception: Length of error does not match number of modules.
         """
+        positions = [(0, 0) for _ in range(10)]
         self.grid = HexGrid(50, 3, 4, False, True, 10, 10)
         self.num_of_modules = len(self.grid.hexagons)
         if len(positions) != self.num_of_modules:
@@ -52,6 +53,6 @@ class Omniveyor:
             # next_action = self.grid.get_path_indexes()[:]
 
 
-omni = Omniveyor(10, [(0, 0) for _ in range(10)])
+omni = Omniveyor()
 omni.actuate()
 print(omni)
