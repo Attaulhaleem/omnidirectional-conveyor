@@ -17,6 +17,10 @@ class Omniveyor:
         self.modules = [Module(positions[i]) for i in range(self.num_of_modules)]
         # self.sr = ShiftRegister(11, 13, 15, self.num_of_modules)
         # self.sr.clear()
+        # !!! implement this function to get box location and size
+        # self.bbox = get_bounding_box()
+        # workaround
+        self.bbox = (0, 0)
 
     def update_sr_data(self):
         """Chain the individual module bytes to be written to shift register(s)."""
@@ -31,17 +35,28 @@ class Omniveyor:
 
     def actuate(self):
         """Actuate the Omniveyor motors according to their assigned states."""
+        self.update_module_actions()
         self.update_sr_data()
         # self.sr.shift_out(self.sr_data)
 
-    def set_module_states(self):
-        # in development !!!
+    def update_module_actions(self):
         for module in self.modules:
             # continue if module is not located under package
-            if module.get_underlying_motors() is None:
+            if module.get_underlying_motors(self.bbox) is None:
                 continue
-            # find the next action of the module
-            # next_action = self.grid.get_path_indexes()[:]
+            # get first movement
+            try:
+                movement = self.grid.get_path_indexes()[0:2]
+            except:
+                continue
+            start = movement[0]
+            goal = movement[1]
+            # get direction for movement
+            dir = self.grid.hexagons[start].get_direction(self.grid.hexagons[goal])
+            # continue if direction does not exist
+            if dir is None:
+                continue
+            module.set_action(ACTIONS[dir])
 
 
 omni = Omniveyor()
