@@ -4,17 +4,7 @@ from hexgrid import HexGrid
 
 
 class Omniveyor:
-    """A configurable conveyor consisting of multiple modules."""
-
     def __init__(self):
-        """Initialize an Omniveyor.
-
-        Args:
-            positions (list[tuple(int, int)]): Module center positions in pi camera frame.
-
-        Raises:
-            Exception: Length of error does not match number of modules.
-        """
         positions = [(0, 0) for _ in range(10)]
         self.grid = HexGrid(50, 3, 4, False, True, 10, 10)
         self.num_of_modules = len(self.grid.hexagons)
@@ -45,6 +35,7 @@ class Omniveyor:
         # self.sr.shift_out(self.sr_data)
 
     def set_module_states(self):
+        # in development !!!
         for module in self.modules:
             # continue if module is not located under package
             if module.get_underlying_motors() is None:
