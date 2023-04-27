@@ -280,14 +280,16 @@ root.rowconfigure(0, weight=1)
 
 main_frame.columnconfigure(0, weight=1)
 main_frame.rowconfigure(0, weight=1)
+main_frame.rowconfigure(1, weight=1)
+main_frame.rowconfigure(2, weight=1)
 
 title_frame.columnconfigure(1, weight=1)
 title_frame.rowconfigure(0, weight=1)
 title_frame.rowconfigure(1, weight=1)
 
-display_frame.columnconfigure(0, weight=1)
+display_frame.columnconfigure(0, weight=3)
 display_frame.columnconfigure(1, weight=1)
-display_frame.columnconfigure(2, weight=1)
+display_frame.columnconfigure(2, weight=3)
 display_frame.rowconfigure(0, weight=5)
 display_frame.rowconfigure(1, weight=5)
 
