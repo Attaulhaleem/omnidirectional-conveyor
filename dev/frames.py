@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 from omniveyor import Omniveyor
+from videofeed import LabelVideoFeed
 
 # assets path
 ASSETS_PATH = "app/assets/"
@@ -49,12 +50,13 @@ class TitleFrame(ttk.Frame):
 class DisplayFrame(ttk.Frame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master=master, **kwargs)
+        # canvas for hexagons
         self.canvas = Canvas(self, highlightthickness=1, highlightbackground="black")
         self.canvas.old_coords = None
         self.canvas.tag_bind("hexagon", "<Button-1>", self.clear_manual_path)
         self.canvas.tag_bind("hexagon", "<B1-Motion>", self.draw_manual_path)
-        self.omniveyor = Omniveyor()
 
+        self.omniveyor = Omniveyor()
         for hexagon in self.omniveyor.hex_grid.hexagons:
             self.canvas.create_polygon(
                 hexagon.points,
@@ -73,32 +75,31 @@ class DisplayFrame(ttk.Frame):
             column=0, row=0, rowspan=2, padx=10, pady=10, sticky=(N, S, E, W)
         )
 
-        # load and resize config image
-        config_image = Image.open("app/assets/hexagons1.png")
-        config_image = config_image.resize(HEADING_ICON_SIZE)
-        config_image = ImageTk.PhotoImage(config_image)
-
-        display_title_label = ttk.Label(
+        # load config image
+        self.config_image = get_tk_image("hexagons1.png", HEADING_ICON_SIZE)
+        # display title
+        ttk.Label(
             self,
             text="Configuration",
             font=HEADING_FONT,
             compound="left",
-            image=config_image,
+            image=self.config_image,
             relief="ridge",
             anchor="center",
-        )
-
-        display_label = ttk.Label(
+        ).grid(column=1, row=0, sticky=(N, S, E, W))
+        # display info
+        ttk.Label(
             self,
             text="Rows:\t\t3\n\nColumns:\t\t4\n\nOrientation:\tPointy Top\n\nOffset:\t\tOdd",
             font=BODY_FONT,
             anchor="center",
             relief="ridge",
             padding=10,
-        )
-
-        # feed_label = ttk.Label(self, relief="raised", anchor="center")
-        # LabelVideoFeed(feed_label, 480, 270, 30)
+        ).grid(column=1, row=1, sticky=(N, S, E, W))
+        # video feed
+        self.video_label = ttk.Label(self, relief="raised", anchor="center")
+        self.video_label.grid(column=2, row=0, rowspan=2, sticky=(N, S, E, W))
+        LabelVideoFeed(self.video_label, 480, 270, 30)
 
     def clear_manual_path(self):
         pass
