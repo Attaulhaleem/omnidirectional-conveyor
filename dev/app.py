@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk, messagebox
-from frames import TitleFrame, DisplayFrame, PathFrame
+from app_frames import TitleFrame, DisplayFrame, PathFrame
 from videofeed import LabelVideoFeed
 from omniveyor import Omniveyor
 
@@ -191,5 +191,4 @@ class App:
         pass
 
 
-app = App()
-app.run()
+App().run()
