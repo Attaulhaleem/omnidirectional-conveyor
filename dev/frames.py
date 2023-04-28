@@ -16,7 +16,7 @@ HEADING_ICON_SIZE = (50, 50)
 BUTTON_ICON_SIZE = (30, 30)
 
 
-def get_image(file, size):
+def get_tk_image(file, size):
     with Image.open(ASSETS_PATH + file) as img:
         return ImageTk.PhotoImage(img.resize(size))
 
@@ -25,7 +25,7 @@ class TitleFrame(ttk.Frame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master=master, **kwargs)
         # load the title image
-        self.title_image = get_image("conveyor.png", TITLE_ICON_SIZE)
+        self.title_image = get_tk_image("conveyor.png", TITLE_ICON_SIZE)
         # title image
         ttk.Label(self, anchor="w", image=self.title_image).grid(
             column=0, row=0, rowspan=2, sticky=(N, S, E, W)

@@ -16,7 +16,7 @@ HEADING_ICON_SIZE = (50, 50)
 BUTTON_ICON_SIZE = (30, 30)
 
 
-def get_image(file, size):
+def get_tk_image(file, size):
     with Image.open(ASSETS_PATH + file) as img:
         return ImageTk.PhotoImage(img.resize(size))
 
@@ -25,8 +25,6 @@ class App:
     def __init__(self):
         self.root = Tk()
         self.root.attributes("-fullscreen", True)
-        # self.root.columnconfigure(0, weight=1)
-        # self.root.rowconfigure(0, weight=1)
         self.create_frames()
 
     def run(self):
