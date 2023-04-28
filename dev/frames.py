@@ -1,8 +1,6 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
-from omniveyor import Omniveyor
-from videofeed import LabelVideoFeed
 
 # assets path
 ASSETS_PATH = "app/assets/"
@@ -53,24 +51,6 @@ class DisplayFrame(ttk.Frame):
         # canvas for hexagons
         self.canvas = Canvas(self, highlightthickness=1, highlightbackground="black")
         self.canvas.old_coords = None
-        self.canvas.tag_bind("hexagon", "<Button-1>", self.clear_manual_path)
-        self.canvas.tag_bind("hexagon", "<B1-Motion>", self.draw_manual_path)
-
-        self.omniveyor = Omniveyor()
-        for hexagon in self.omniveyor.hex_grid.hexagons:
-            self.canvas.create_polygon(
-                hexagon.points,
-                fill="lightgreen",
-                outline="black",
-                activefill="red",
-                tags="hexagon",
-            )
-            self.canvas.create_text(
-                hexagon.position[0],
-                hexagon.position[1],
-                text=str(hexagon.id),
-                tags="id",
-            )
         self.canvas.grid(
             column=0, row=0, rowspan=2, padx=10, pady=10, sticky=(N, S, E, W)
         )
@@ -99,13 +79,6 @@ class DisplayFrame(ttk.Frame):
         # video feed
         self.video_label = ttk.Label(self, relief="raised", anchor="center")
         self.video_label.grid(column=2, row=0, rowspan=2, sticky=(N, S, E, W))
-        LabelVideoFeed(self.video_label, 480, 270, 30)
-
-    def clear_manual_path(self):
-        pass
-
-    def draw_manual_path(self):
-        pass
 
 
 class PathFrame(ttk.Frame):
