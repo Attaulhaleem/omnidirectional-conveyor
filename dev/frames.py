@@ -84,3 +84,80 @@ class DisplayFrame(ttk.Frame):
 class PathFrame(ttk.Frame):
     def __init__(self, master=None, **kwargs):
         super().__init__(master=master, **kwargs)
+        # load path title image
+        self.path_title_image = get_tk_image("path_icon.png", HEADING_ICON_SIZE)
+        # path title label
+        ttk.Label(
+            self,
+            text="Path Finder",
+            image=self.path_title_image,
+            compound="left",
+            font=HEADING_FONT,
+            anchor="center",
+        ).grid(column=0, row=0, columnspan=4, sticky=(N, S, E, W))
+        # path source label
+        ttk.Label(self, font=BODY_FONT, text="Start Point", anchor="w").grid(
+            column=0, row=1, sticky=(N, S, E, W)
+        )
+        # path source
+        path_src = IntVar()
+        path_src_spinbox = ttk.Spinbox(self, from_=0, to=9, textvariable=path_src)
+        path_src_spinbox.state(["readonly"])
+        path_src_spinbox.grid(column=1, row=1, padx=5, pady=5, sticky=(N, S, E, W))
+        # path destination label
+        ttk.Label(self, font=BODY_FONT, text="End Point", anchor="w").grid(
+            column=0, row=2, sticky=(N, S, E, W)
+        )
+        # path destination
+        path_dest = IntVar()
+        path_dest.set(1)
+        path_dest_spinbox = ttk.Spinbox(self, from_=0, to=9, textvariable=path_dest)
+        path_dest_spinbox.state(["readonly"])
+        path_dest_spinbox.grid(column=1, row=2, padx=5, pady=5, sticky=(N, S, E, W))
+        # manual path
+        manual_path = BooleanVar()
+        path_list = list()
+        # mode select button
+        self.path_checkbutton = ttk.Checkbutton(
+            self,
+            text="Use Manual Path",
+            variable=manual_path,
+            onvalue=True,
+            offvalue=False,
+        )
+        self.path_checkbutton.grid(
+            column=2, row=1, columnspan=2, rowspan=2, sticky=(N, S, E, W)
+        )
+        # load draw path image
+        self.path_draw_image = get_tk_image("draw_icon.png", BUTTON_ICON_SIZE)
+        # draw path button
+        self.path_draw_button = ttk.Button(
+            self,
+            text="Draw Shortest Path",
+            image=self.path_draw_image,
+            compound="top",
+            padding=5,
+        )
+        self.path_draw_button.grid(column=0, row=3, columnspan=2, sticky=(N, S, E, W))
+        # load move path image
+        self.path_move_image = get_tk_image("move_icon.png", BUTTON_ICON_SIZE)
+        # move path button
+        self.path_move_button = ttk.Button(
+            self,
+            text="Traverse Path",
+            image=self.path_move_image,
+            compound="top",
+            padding=5,
+            state=["disabled"],
+        )
+        self.path_move_button.grid(column=2, row=3, columnspan=2, sticky=(N, S, E, W))
+        # path text label
+        ttk.Label(self, text="Path", font=BODY_FONT).grid(
+            column=0, row=4, sticky=(N, S, E, W)
+        )
+        # path text variable
+        path_text = StringVar()
+        # path text entry
+        ttk.Entry(
+            self, state=["readonly"], font=BODY_FONT, textvariable=path_text
+        ).grid(column=1, row=4, columnspan=3, sticky=(N, S, E, W))
