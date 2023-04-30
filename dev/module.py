@@ -77,6 +77,7 @@ class Module:
         Args:
             bounding_box (tuple[int, int, int, int]): The bounding box (x, y, w, h) of the package.
         """
+        # TODO: implement angled boxes
         for pos in self.motors.position:
             if (
                 pos[0] > bbox.x
