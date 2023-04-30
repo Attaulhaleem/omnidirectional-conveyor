@@ -73,7 +73,7 @@ class App:
         self.path_frame.rowconfigure(1, weight=3)
 
     def draw_canvas(self):
-        for hexagon in self.omniveyor.hex_grid.hexagons:
+        for hexagon in self.omniveyor.hexagons:
             self.display_frame.canvas.create_polygon(
                 hexagon.points,
                 fill="lightgreen",
@@ -99,13 +99,12 @@ class App:
 
     def draw_manual_path(self, event):
         # for readability
-        hex_grid = self.omniveyor.hex_grid
         canvas = self.display_frame.canvas
         # if manual mode not selected, do not draw path
         if not self.is_manual.get():
             return
         # find nearest hexagon's index
-        index = hex_grid.get_nearest_index((event.x, event.y))
+        index = self.omniveyor.get_nearest_index((event.x, event.y))
         # if new hexagon
         if len(self.path_indexes) == 0 or self.path_indexes[-1] != index:
             # add to path
@@ -113,7 +112,7 @@ class App:
             # convert to string for displaying
             self.path_text.set(" -> ".join(map(str, self.path_indexes)))
         # store the new point
-        (x, y) = hex_grid.hexagons[index].position
+        (x, y) = self.omniveyor.hexagons[index].position
         # if more than one points have been traced
         if canvas.old_coords is not None:
             # retrieve last point
@@ -158,7 +157,6 @@ class App:
     def draw_shortest_path(self):
         # for readability
         canvas = self.display_frame.canvas
-        hex_grid = self.omniveyor.hex_grid
         move_button = self.path_frame.move_button
         # delete previously drawn path
         canvas.delete("lines")
@@ -170,12 +168,14 @@ class App:
             messagebox.showerror("Error", "Start and end points cannot be the same!")
             return
         # find path from start to end pt
-        path_list = hex_grid.get_path_indexes(self.start_pt.get(), self.end_pt.get())
+        path_list = self.omniveyor.get_path_indexes(
+            self.start_pt.get(), self.end_pt.get()
+        )
         # convert to string for displaying
         self.path_text.set(" -> ".join(map(str, path_list)))
         # get hexagon center positions
         path_positions = [
-            val for i in path_list for val in hex_grid.hexagons[i].position
+            val for i in path_list for val in self.omniveyor.hexagons[i].position
         ]
         # draw lines through hexagon centers
         canvas.create_line(
