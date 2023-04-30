@@ -78,12 +78,12 @@ class Module:
             bbox (tuple[int, int, int, int]): The bounding box (x, y, w, h) of the package.
         """
         # TODO: implement angled boxes
-        for pos in self.motors.position:
+        for motor in self.motors:
             if (
-                pos[0] >= bbox.x
-                and pos[0] < bbox.x + bbox.w
-                and pos[1] >= bbox.y
-                and pos[1] < bbox.y + bbox.h
+                motor.position[0] >= bbox.x
+                and motor.position[0] < bbox.x + bbox.w
+                and motor.position[1] >= bbox.y
+                and motor.position[1] < bbox.y + bbox.h
             ):
                 return True
         return False
