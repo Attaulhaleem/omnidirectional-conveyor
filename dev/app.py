@@ -11,11 +11,8 @@ class App:
         self.create_frames()
         self.draw_canvas()
 
-    def update_video_feed(self):
-        LabelVideoFeed(self.display_frame.video_label, 480, 270, 30)
-
     def run(self):
-        self.update_video_feed()
+        LabelVideoFeed(self.display_frame.video_label, 480, 270, 30)
         self.root.mainloop()
 
     def create_frames(self):
@@ -188,7 +185,7 @@ class App:
         move_button.state(["!disabled"])
 
     def move_path(self):
-        pass
+        self.omniveyor.actuate()
 
 
 App().run()
