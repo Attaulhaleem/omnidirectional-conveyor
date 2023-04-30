@@ -71,10 +71,18 @@ class Module:
                 data_list[motor.pins[i]] = motor.state[i]
         self.sr_byte = data_list
 
-    def get_underlying_motors(self, bounding_box):
+    def is_below_package(self, bbox):
         """Identify which motors lie under the bounding box.
 
         Args:
             bounding_box (tuple[int, int, int, int]): The bounding box (x, y, w, h) of the package.
         """
-        pass
+        for pos in self.motors.position:
+            if (
+                pos[0] > bbox.x
+                and pos[0] < bbox.x + bbox.w
+                and pos[1] > bbox.y
+                and pos[1] < bbox.y + bbox.h
+            ):
+                return True
+        return False
