@@ -43,9 +43,9 @@ class Omniveyor:
 
     def update_module_actions(self):
         for module in self.modules:
-            # continue if module is not located under package
-            if module.get_underlying_motors(self.bbox) is None:
-                continue
+            # module is idle if not located under package
+            if not module.is_below_package(self.bbox):
+                module.set_action(ACTIONS["idle"])
             # get first movement
             try:
                 movement = self.hex_grid.get_path_indexes()[0:2]
