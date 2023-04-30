@@ -75,14 +75,14 @@ class Module:
         """Identify which motors lie under the bounding box.
 
         Args:
-            bounding_box (tuple[int, int, int, int]): The bounding box (x, y, w, h) of the package.
+            bbox (tuple[int, int, int, int]): The bounding box (x, y, w, h) of the package.
         """
         # TODO: implement angled boxes
         for pos in self.motors.position:
             if (
-                pos[0] > bbox.x
+                pos[0] >= bbox.x
                 and pos[0] < bbox.x + bbox.w
-                and pos[1] > bbox.y
+                and pos[1] >= bbox.y
                 and pos[1] < bbox.y + bbox.h
             ):
                 return True
