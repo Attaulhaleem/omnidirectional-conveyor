@@ -47,7 +47,7 @@ class Omniveyor:
                 module.set_action(ACTIONS["idle"])
             # get first movement
             try:
-                movement = self.hex_grid.get_path_indexes()[0:2]
+                movement = self.get_path_indexes()[0:2]
             except:
                 continue
             start = movement[0]
