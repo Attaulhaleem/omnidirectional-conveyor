@@ -26,7 +26,10 @@ class ShiftRegister:
         sleep(self.delay)
 
     def shift_out(self, data_list):
-        """Shift out and latch data to shift register(s)."""
+        """MSB first shift out and latch data to shift register(s)."""
+        # 1st bit in data_list is sent first
+        # reverse to send LSB first
+        data_list.reverse()
         # input validation
         if len(data_list) != self.daisy_chain * 8:
             raise Exception(
@@ -56,6 +59,5 @@ if __name__ == "__main__":
     data_list = []
     for _ in range(daisy_chain):
         data_list.extend([0, 1, 1, 0, 0, 0, 0, 1])
-    data_list.reverse()
     sr.shift_out(data_list)
     sleep(60)
