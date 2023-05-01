@@ -56,5 +56,6 @@ if __name__ == "__main__":
     data_list = []
     for _ in range(daisy_chain):
         data_list.extend([0, 1, 1, 0, 0, 0, 0, 1])
+    data_list.reverse()
     sr.shift_out(data_list)
     sleep(60)
