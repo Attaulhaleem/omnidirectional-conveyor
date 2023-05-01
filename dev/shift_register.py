@@ -48,3 +48,10 @@ class ShiftRegister:
     def clear(self):
         """Clear the output of shift register(s)."""
         self.shift_out([0 for _ in range(self.daisy_chain * 8)])
+
+
+if __name__ == "__main__":
+    sr = ShiftRegister(11, 13, 15, 2)
+    data_list = []
+    data_list.extend([0, 1, 1, 0, 0, 0, 0, 1])
+    sr.shift_out(data_list)
