@@ -51,8 +51,10 @@ class ShiftRegister:
 
 
 if __name__ == "__main__":
-    sr = ShiftRegister(11, 13, 15, 2)
+    daisy_chain = 2
+    sr = ShiftRegister(11, 13, 15, daisy_chain)
     data_list = []
-    data_list.extend([0, 1, 1, 0, 0, 0, 0, 1])
+    for _ in range(daisy_chain):
+        data_list.extend([0, 1, 1, 0, 0, 0, 0, 1])
     sr.shift_out(data_list)
     sleep(60)
