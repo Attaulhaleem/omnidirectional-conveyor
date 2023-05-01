@@ -54,10 +54,18 @@ class ShiftRegister:
 
 
 if __name__ == "__main__":
-    daisy_chain = 7
+    daisy_chain = int(input("Daisy chain: "))
     sr = ShiftRegister(11, 13, 15, daisy_chain)
     data_list = []
     for _ in range(daisy_chain):
         data_list.extend([0, 1, 1, 0, 0, 0, 0, 1])
     sr.shift_out(data_list)
-    sleep(60)
+
+    while True:
+        try:
+            sleep(1)
+        except KeyboardInterrupt:
+            print("Manually exiting program!")
+            sr.clear()
+            GPIO.cleanup()
+            raise SystemExit
