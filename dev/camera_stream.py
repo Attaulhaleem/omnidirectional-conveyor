@@ -21,6 +21,7 @@ class CameraStream:
         self.thread = threading.Thread(target=self._update, args=())
         self.thread.daemon = True
         self.thread.start()
+        self.update_label()
 
     def _update(self):
         for frame in self.camera.capture_continuous(
