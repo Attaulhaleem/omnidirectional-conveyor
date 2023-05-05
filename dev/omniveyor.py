@@ -58,6 +58,7 @@ class Omniveyor:
             # get first movement
             try:
                 movement = self.get_path_indexes(i, self.goal)[0:2]
+                print(movement)
             except:
                 continue
             first = movement[0]
