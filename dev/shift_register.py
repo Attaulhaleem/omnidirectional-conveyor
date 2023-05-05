@@ -54,13 +54,16 @@ class ShiftRegister:
 
 
 if __name__ == "__main__":
-    daisy_chain = int(input("Daisy chain: "))
-    sr1 = ShiftRegister(11, 13, 15, daisy_chain)
-    sr2 = ShiftRegister(3, 5, 7, daisy_chain)
+    sr1 = ShiftRegister(11, 13, 15, 5)
     data_list = []
-    for _ in range(daisy_chain):
+    for _ in range(5):
         data_list.extend([0, 1, 1, 0, 0, 0, 0, 1])
     sr1.shift_out(data_list)
+
+    sr2 = ShiftRegister(3, 5, 7, 2)
+    data_list = []
+    for _ in range(2):
+        data_list.extend([0, 1, 1, 0, 0, 0, 0, 1])
     sr2.shift_out(data_list)
 
     while True:
