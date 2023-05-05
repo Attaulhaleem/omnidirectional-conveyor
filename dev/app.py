@@ -17,7 +17,8 @@ class App:
 
     def create_frames(self):
         self.root = Tk()
-        self.root.attributes("-fullscreen", True)
+        # self.root.attributes("-fullscreen", True)
+        self.root.state("zoomed")
         self.root.resizable(0, 0)
         self.root.rowconfigure(0, weight=1)
         self.root.rowconfigure(1, weight=1)
