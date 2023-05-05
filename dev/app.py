@@ -1,5 +1,5 @@
 import cv2
-from PIL import ImageTk
+from PIL import Image, ImageTk
 from tkinter import *
 from tkinter import messagebox
 from omniveyor import Omniveyor
