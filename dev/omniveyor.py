@@ -2,6 +2,7 @@ from shift_register import ShiftRegister
 from hexagon import SQRT_3, Hexagon
 from queue import Queue
 from module import *
+import time
 
 
 class Omniveyor:
@@ -156,3 +157,4 @@ if __name__ == "__main__":
     for module in omni.modules:
         module.set_action(ACTIONS["clockwise"])
     omni.actuate()
+    time.sleep(60)
