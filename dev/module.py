@@ -17,8 +17,8 @@ class Module:
     """A module of the Omniveyor. Consists of 3 motors controlled by the L293D Motor Driver Shield."""
 
     # see shield schematic [M3 and M4 were replaced on my shield] (http://wiki.sunfounder.cc/images/f/ff/L293D_schematic.png)
-    # output format [3A, 4B, 3B, 2B, 1B, 1A, 2A, 4A]
-    PIN_CONFIG = ((5, 4), (6, 3), (0, 2))  # motor pins on shift register output
+    # output format [4A, 2A, 1A, 1B, 2B, 3B, 4B, 3A]
+    PIN_CONFIG = ((2, 3), (1, 4), (7, 5))  # motor pins on shift register output
 
     def __init__(self, position, action=ACTIONS["idle"]):
         """Initialize a module.
