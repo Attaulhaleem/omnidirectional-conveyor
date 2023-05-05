@@ -60,9 +60,9 @@ if __name__ == "__main__":
         data_list.extend([0, 1, 1, 0, 0, 0, 0, 1])
     sr1.shift_out(data_list)
 
-    sr2 = ShiftRegister(11, 13, 15, 3)
+    sr2 = ShiftRegister(11, 13, 15, 4)
     data_list = []
-    for _ in range(3):
+    for _ in range(4):
         data_list.extend([0, 1, 1, 0, 0, 0, 0, 1])
     sr2.shift_out(data_list)
 
