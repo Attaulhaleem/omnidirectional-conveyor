@@ -17,23 +17,19 @@ class App:
 
     def create_frames(self):
         self.root = Tk()
-        self.root.attributes("-fullscreen", True)
-        self.root.columnconfigure(0, weight=1)
+        # self.root.attributes("-topmost", True)
+        self.root.state("zoomed")
+        self.root.resizable(0, 0)
         self.root.rowconfigure(0, weight=1)
+        self.root.rowconfigure(1, weight=1)
+        self.root.rowconfigure(2, weight=1)
 
-        self.main_frame = ttk.Frame(self.root)
-        self.main_frame.grid(column=0, row=0, sticky=(N, S, E, W))
-        self.main_frame.columnconfigure(0, weight=1)
-        self.main_frame.rowconfigure(0, weight=1)
-
-        self.title_frame = TitleFrame(self.main_frame)
-        self.title_frame.grid(column=0, row=0, sticky=(N, S, E, W))
+        self.title_frame = TitleFrame(self.root)
+        self.title_frame.grid(column=0, row=0, sticky="ew")
         self.title_frame.columnconfigure(1, weight=1)
-        self.title_frame.rowconfigure(0, weight=1)
-        self.title_frame.rowconfigure(1, weight=1)
 
-        self.display_frame = DisplayFrame(self.main_frame)
-        self.display_frame.grid(column=0, row=1, sticky=(N, S, E, W))
+        self.display_frame = DisplayFrame(self.root)
+        self.display_frame.grid(column=0, row=1, sticky="ew")
         # bind events to canvas
         self.display_frame.canvas.tag_bind(
             "hexagon", "<Button-1>", self.clear_manual_path
@@ -41,14 +37,11 @@ class App:
         self.display_frame.canvas.tag_bind(
             "hexagon", "<B1-Motion>", self.draw_manual_path
         )
-        self.display_frame.columnconfigure(0, weight=3)
-        self.display_frame.columnconfigure(1, weight=1)
-        self.display_frame.columnconfigure(2, weight=3)
-        self.display_frame.rowconfigure(0, weight=5)
-        self.display_frame.rowconfigure(1, weight=5)
+        self.display_frame.columnconfigure(0, weight=1)
+        self.display_frame.columnconfigure(2, weight=1)
 
-        self.path_frame = PathFrame(self.main_frame, relief="raised")
-        self.path_frame.grid(column=0, row=2, sticky=(N, S, E, W))
+        self.path_frame = PathFrame(self.root, relief="raised")
+        self.path_frame.grid(column=0, row=2, sticky="ew")
         # stores the current path indexes
         self.path_indexes = []
         # define variables for widget states
@@ -65,12 +58,6 @@ class App:
         )
         self.path_frame.draw_button.config(command=self.draw_shortest_path)
         self.path_frame.move_button.config(command=self.move_path)
-        self.path_frame.columnconfigure(0, weight=1)
-        self.path_frame.columnconfigure(1, weight=1)
-        self.path_frame.columnconfigure(2, weight=1)
-        self.path_frame.columnconfigure(3, weight=1)
-        self.path_frame.rowconfigure(0, weight=3)
-        self.path_frame.rowconfigure(1, weight=3)
 
     def draw_canvas(self):
         for hexagon in self.omniveyor.hexagons:
@@ -188,4 +175,5 @@ class App:
         self.omniveyor.actuate()
 
 
-App().run()
+if __name__ == "__main__":
+    App().run()
