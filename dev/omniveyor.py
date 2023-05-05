@@ -149,3 +149,10 @@ class Omniveyor:
         path.append(start)
         path.reverse()
         return path
+
+
+if __name__ == "__main__":
+    omni = Omniveyor()
+    for module in omni.modules:
+        module.set_action(ACTIONS["clockwise"])
+    omni.actuate()
