@@ -81,7 +81,7 @@ class Omniveyor:
                     Y += 0.5 * SQRT_3 * length if is_offset else 0
                     coord = (col, row if is_offset else row - 0.5)
                     # give a unique id to each hexagon
-                    id = count if is_offset else count + rows - 1 - 2 * row
+                    id = count if is_offset else count + rows - 2 * row
                     # increment total num of hexagons
                     count += 1
                     # create hexagon
@@ -99,7 +99,7 @@ class Omniveyor:
                     Y = starty + row * 1.5 * length
                     coord = (col if is_offset else col - 0.5, row)
                     # give a unique id to each hexagon
-                    id = count if is_offset else count + cols - 1 - 2 * col
+                    id = count if is_offset else count + cols - 2 * col
                     # increment total num of hexagons
                     count += 1
                     # create hexagon
