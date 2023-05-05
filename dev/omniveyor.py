@@ -6,9 +6,10 @@ from module import *
 
 class Omniveyor:
     def __init__(self):
-        positions = [(0, 0) for _ in range(10)]
-        self.create_hexagons(50, 3, 4, False, True, 10, 10)
+        self.create_hexagons(50, 3, 3, False, False, 10, 10)
         self.num_of_modules = len(self.hexagons)
+        # workaround
+        positions = [(0, 0) for _ in range(self.num_of_modules)]
         if len(positions) != self.num_of_modules:
             raise Exception(
                 "Positions must contain data for {} modules!".format(
