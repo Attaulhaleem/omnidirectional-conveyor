@@ -1,18 +1,36 @@
+import cv2
+from PIL import ImageTk
 from tkinter import *
-from tkinter import ttk, messagebox
-from app_frames import TitleFrame, DisplayFrame, PathFrame
-from videofeed import LabelVideoFeed
+from tkinter import messagebox
 from omniveyor import Omniveyor
+from camera_stream import CameraStream
+from app_frames import TitleFrame, DisplayFrame, PathFrame
 
 
 class App:
     def __init__(self):
         self.omniveyor = Omniveyor()
+        self.camera_stream = CameraStream()
         self.create_frames()
         self.draw_canvas()
 
+    def update_video(self):
+        frame = self.camera_stream.read()
+        if frame is not None:
+            # Convert the frame from OpenCV to a PIL ImageTk object
+            image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+            image_tk = ImageTk.PhotoImage(image)
+
+            # Update the label with the new image
+            self.display_frame.video_label.configure(image=image_tk)
+            self.display_frame.video_label.image = image_tk
+
+        self.display_frame.video_label.after(
+            10, self.update_video
+        )  # Schedule the next update
+
     def run(self):
-        LabelVideoFeed(self.display_frame.video_label, 480, 270, 30)
+        self.update_video()
         self.root.mainloop()
 
     def create_frames(self):
