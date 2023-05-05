@@ -38,17 +38,8 @@ class Omniveyor:
         # chained_data = [bit for byte in chained_data for bit in byte]
         self.sr_data = chained_data
 
-    def stop(self):
-        """Stop all the motors."""
-        for module in self.modules:
-            module.set_action(ACTIONS["idle"])
-        self.update_sr_data()
-        self.sr1.shift_out(self.sr_data[0:40])
-        self.sr2.shift_out(self.sr_data[40:64])
-
     def actuate(self):
         """Actuate the Omniveyor motors according to their assigned states."""
-        self.stop()
         self.update_module_actions()
         self.update_sr_data()
         print(self.sr_data)
@@ -69,6 +60,7 @@ class Omniveyor:
                 first = movement[0]
                 second = movement[1]
             except:
+                module.set_action(ACTIONS["idle"])
                 continue
             # get direction for movement
             dir = self.hexagons[first].get_direction(self.hexagons[second])
