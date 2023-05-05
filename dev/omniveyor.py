@@ -40,9 +40,6 @@ class Omniveyor:
 
     def actuate(self):
         """Actuate the Omniveyor motors according to their assigned states."""
-        self.sr_data = [0 for _ in range(8 * 8)]
-        self.sr1.shift_out(self.sr_data[0:40])
-        self.sr2.shift_out(self.sr_data[40:64])
         self.update_module_actions()
         self.update_sr_data()
         self.sr1.shift_out(self.sr_data[0:40])
@@ -53,6 +50,7 @@ class Omniveyor:
             return
 
         for i, module in enumerate(self.modules):
+            module.set_action(ACTIONS["idle"])
             # module is idle if not located under package
             # if not module.is_below_package(self.bbox):
             #     module.set_action(ACTIONS["idle"])
@@ -62,7 +60,6 @@ class Omniveyor:
                 first = movement[0]
                 second = movement[1]
             except:
-                module.set_action(ACTIONS["idle"])
                 continue
             # get direction for movement
             dir = self.hexagons[first].get_direction(self.hexagons[second])
