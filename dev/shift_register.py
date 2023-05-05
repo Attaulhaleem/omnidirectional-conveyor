@@ -55,7 +55,7 @@ class ShiftRegister:
 
 if __name__ == "__main__":
     daisy_chain = int(input("Daisy chain: "))
-    sr = ShiftRegister(3, 5, 7, daisy_chain)
+    sr = ShiftRegister(11, 13, 15, daisy_chain)
     data_list = []
     for _ in range(daisy_chain):
         data_list.extend([0, 1, 1, 0, 0, 0, 0, 1])
