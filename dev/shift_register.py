@@ -76,5 +76,5 @@ if __name__ == "__main__":
             print("Manually exiting program!")
             sr1.clear()
             sr2.clear()
-            GPIO.cleanup()
+            # GPIO.cleanup()
             raise SystemExit
