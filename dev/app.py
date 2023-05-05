@@ -181,7 +181,10 @@ class App:
         move_button.state(["!disabled"])
 
     def move_path(self):
-        self.omniveyor.goal = self.end_pt.get()
+        if self.path_indexes:
+            self.omniveyor.goal = self.path_indexes[-1]
+        else:
+            self.omniveyor.goal = None
         self.omniveyor.actuate()
 
 
