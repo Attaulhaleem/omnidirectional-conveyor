@@ -31,18 +31,16 @@ class Omniveyor:
 
     def update_sr_data(self):
         """Chain the individual module bytes to be written to shift register(s)."""
-        chained_data = list()
+        chained_data = []
         for module in self.modules:
-            chained_data.append(module.sr_byte)
-        # first motor data must be sent last
-        chained_data.reverse()
+            chained_data.extend(module.sr_byte)
         # flatten list
-        chained_data = [bit for byte in chained_data for bit in byte]
+        # chained_data = [bit for byte in chained_data for bit in byte]
         self.sr_data = chained_data
 
     def actuate(self):
         """Actuate the Omniveyor motors according to their assigned states."""
-        # self.update_module_actions()
+        self.update_module_actions()
         self.update_sr_data()
         print(self.sr_data)
         self.sr1.shift_out(self.sr_data[0:40])
@@ -165,4 +163,4 @@ if __name__ == "__main__":
     for module in omni.modules:
         module.set_action(ACTIONS.get(act, ACTIONS["idle"]))
         omni.actuate()
-        time.sleep(10)
+        time.sleep(3)
