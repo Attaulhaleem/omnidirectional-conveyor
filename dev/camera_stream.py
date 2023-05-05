@@ -33,7 +33,7 @@ class CameraStream:
         return self.frame
 
     def update_label(self):
-        frame = self.camera_stream.read()
+        frame = self.read()
         if frame is not None:
             # Convert the frame from OpenCV to a PIL ImageTk object
             image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
