@@ -56,6 +56,7 @@ class App:
         self.master.after(10, self.update_label)  # Schedule the next update
 
 
-root = tk.Tk()
-app = App(root)
-root.mainloop()
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = App(root)
+    root.mainloop()
