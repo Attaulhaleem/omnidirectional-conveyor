@@ -13,7 +13,7 @@ HEADING_ICON_SIZE = (50, 50)
 BUTTON_ICON_SIZE = (30, 30)
 
 
-def get_tk_image(file, size, assets="app/assets/"):
+def get_tk_image(file, size, assets="assets/"):
     with Image.open(assets + file) as img:
         return ImageTk.PhotoImage(img.resize(size))
 
