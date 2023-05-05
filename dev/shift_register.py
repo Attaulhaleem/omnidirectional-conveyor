@@ -60,13 +60,13 @@ if __name__ == "__main__":
     sr1 = ShiftRegister(3, 5, 7, ds1)
     data_list = []
     for _ in range(ds1):
-        data_list.extend([0, 1, 1, 0, 0, 0, 0, 1])
+        data_list.extend([0, 0, 0, 1, 1, 1, 0, 0])
     sr1.shift_out(data_list)
 
     sr2 = ShiftRegister(11, 13, 15, ds2)
     data_list = []
     for _ in range(ds2):
-        data_list.extend([0, 1, 1, 0, 0, 0, 0, 1])
+        data_list.extend([0, 0, 0, 1, 1, 1, 0, 0])
     sr2.shift_out(data_list)
 
     while True:
