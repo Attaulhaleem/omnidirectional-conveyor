@@ -22,6 +22,8 @@ class Omniveyor:
         self.sr2 = ShiftRegister(11, 13, 15, 3)
         self.sr1.clear()
         self.sr2.clear()
+        self.start = None
+        self.goal = None
         # !!! implement this function to get box location and size
         # self.bbox = get_bounding_box()
         # workaround
@@ -46,19 +48,22 @@ class Omniveyor:
         self.sr2.shift_out(self.sr_data[40:64])
 
     def update_module_actions(self):
-        for module in self.modules:
+        if self.goal is None:
+            return
+
+        for i, module in enumerate(self.modules):
             # module is idle if not located under package
-            if not module.is_below_package(self.bbox):
-                module.set_action(ACTIONS["idle"])
+            # if not module.is_below_package(self.bbox):
+            #     module.set_action(ACTIONS["idle"])
             # get first movement
             try:
-                movement = self.get_path_indexes()[0:2]
+                movement = self.get_path_indexes(i, self.goal)[0:2]
             except:
                 continue
-            start = movement[0]
-            goal = movement[1]
+            first = movement[0]
+            second = movement[1]
             # get direction for movement
-            dir = self.hexagons[start].get_direction(self.hexagons[goal])
+            dir = self.hexagons[first].get_direction(self.hexagons[second])
             # continue if direction does not exist
             if dir is None:
                 continue
