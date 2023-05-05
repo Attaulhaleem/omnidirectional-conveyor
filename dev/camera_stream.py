@@ -45,33 +45,3 @@ class CameraStream:
             self.label.image = image_tk
 
         self.label.after(10, self.update_label)  # Schedule the next update
-
-
-# class App:
-#     def __init__(self, master):
-#         self.master = master
-#         self.camera_stream = CameraStream()
-
-#         self.label = tk.Label(master)
-#         self.label.pack()
-
-#         self.update_label()
-
-#     def update_label(self):
-#         frame = self.camera_stream.read()
-#         if frame is not None:
-#             # Convert the frame from OpenCV to a PIL ImageTk object
-#             image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-#             image_tk = ImageTk.PhotoImage(image)
-
-#             # Update the label with the new image
-#             self.label.configure(image=image_tk)
-#             self.label.image = image_tk
-
-#         self.master.after(10, self.update_label)  # Schedule the next update
-
-
-# if __name__ == "__main__":
-#     root = tk.Tk()
-#     app = App(root)
-#     root.mainloop()
