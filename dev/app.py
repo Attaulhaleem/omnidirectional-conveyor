@@ -14,23 +14,8 @@ class App:
         self.create_frames()
         self.draw_canvas()
 
-    def update_video(self):
-        frame = self.camera_stream.read()
-        if frame is not None:
-            # Convert the frame from OpenCV to a PIL ImageTk object
-            image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-            image_tk = ImageTk.PhotoImage(image)
-
-            # Update the label with the new image
-            self.display_frame.video_label.configure(image=image_tk)
-            self.display_frame.video_label.image = image_tk
-
-        self.display_frame.video_label.after(
-            10, self.update_video
-        )  # Schedule the next update
-
     def run(self):
-        self.update_video()
+        CameraStream(self.display_frame.video_label)
         self.root.mainloop()
 
     def create_frames(self):
