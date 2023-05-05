@@ -44,7 +44,7 @@ class CameraStream:
             self.label.configure(image=image_tk)
             self.label.image = image_tk
 
-        self.label.after(10, self.update_video)  # Schedule the next update
+        self.label.after(10, self.update_label)  # Schedule the next update
 
 
 # class App:
