@@ -18,8 +18,8 @@ class Omniveyor:
                 )
             )
         self.modules = [Module(positions[i]) for i in range(self.num_of_modules)]
-        self.sr1 = ShiftRegister(11, 13, 15, 5)
-        self.sr2 = ShiftRegister(3, 5, 7, 3)
+        self.sr1 = ShiftRegister(3, 5, 7, 5)
+        self.sr2 = ShiftRegister(11, 13, 15, 3)
         self.sr1.clear()
         self.sr2.clear()
         # !!! implement this function to get box location and size
