@@ -42,7 +42,7 @@ class Omniveyor:
 
     def actuate(self):
         """Actuate the Omniveyor motors according to their assigned states."""
-        self.update_module_actions()
+        # self.update_module_actions()
         self.update_sr_data()
         self.sr1.shift_out(self.sr_data[0:40])
         self.sr2.shift_out(self.sr_data[40:64])
