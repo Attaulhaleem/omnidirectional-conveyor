@@ -39,6 +39,7 @@ class App:
             "hexagon", "<B1-Motion>", self.draw_manual_path
         )
         self.display_frame.columnconfigure(0, weight=1)
+        self.display_frame.columnconfigure(1, weight=1)
         self.display_frame.columnconfigure(2, weight=1)
 
         self.path_frame = PathFrame(self.root, relief="raised")
@@ -59,6 +60,9 @@ class App:
         )
         self.path_frame.draw_button.config(command=self.draw_shortest_path)
         self.path_frame.move_button.config(command=self.move_path)
+        self.path_frame.columnconfigure(0, weight=1)
+        self.path_frame.columnconfigure(1, weight=1)
+        self.path_frame.columnconfigure(2, weight=1)
 
     def draw_canvas(self):
         for hexagon in self.omniveyor.hexagons:
