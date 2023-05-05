@@ -161,6 +161,8 @@ if __name__ == "__main__":
     act = input("Action: ")
     omni = Omniveyor()
     for i in range(omni.num_of_modules):
-        omni.modules[i].set_action(ACTIONS.get(act, ACTIONS["idle"]))
-    omni.actuate()
-    time.sleep(60)
+        for j in range(omni.num_of_modules):
+            omni.modules[j].set_action(ACTIONS.get(act, ACTIONS["idle"]))
+        omni.modules[i].set_action(ACTIONS["right"])
+        omni.actuate()
+        time.sleep(10)
