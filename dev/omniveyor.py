@@ -58,14 +58,12 @@ class Omniveyor:
             # get first movement
             try:
                 movement = self.get_path_indexes(i, self.goal)[0:2]
-                print(movement)
+                first = movement[0]
+                second = movement[1]
             except:
                 continue
-            first = movement[0]
-            second = movement[1]
             # get direction for movement
             dir = self.hexagons[first].get_direction(self.hexagons[second])
-            print(dir)
             # continue if direction does not exist
             if dir is None:
                 continue
