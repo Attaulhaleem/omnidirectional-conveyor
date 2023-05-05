@@ -1,4 +1,4 @@
-# from shift_register import ShiftRegister
+from shift_register import ShiftRegister
 from hexagon import SQRT_3, Hexagon
 from queue import Queue
 from module import *
@@ -17,8 +17,10 @@ class Omniveyor:
                 )
             )
         self.modules = [Module(positions[i]) for i in range(self.num_of_modules)]
-        # self.sr = ShiftRegister(11, 13, 15, self.num_of_modules)
-        # self.sr.clear()
+        self.sr1 = ShiftRegister(11, 13, 15, 5)
+        self.sr2 = ShiftRegister(3, 5, 7, 3)
+        self.sr1.clear()
+        self.sr2.clear()
         # !!! implement this function to get box location and size
         # self.bbox = get_bounding_box()
         # workaround
@@ -39,7 +41,8 @@ class Omniveyor:
         """Actuate the Omniveyor motors according to their assigned states."""
         self.update_module_actions()
         self.update_sr_data()
-        # self.sr.shift_out(self.sr_data)
+        self.sr1.shift_out(self.sr_data[0:40])
+        self.sr2.shift_out(self.sr_data[40:64])
 
     def update_module_actions(self):
         for module in self.modules:
@@ -78,7 +81,7 @@ class Omniveyor:
                     Y += 0.5 * SQRT_3 * length if is_offset else 0
                     coord = (col, row if is_offset else row - 0.5)
                     # give a unique id to each hexagon
-                    id = count if not is_offset else count + rows - 1 - 2 * row
+                    id = count if col % 2 else count + rows - 1 - 2 * row
                     # increment total num of hexagons
                     count += 1
                     # create hexagon
@@ -96,7 +99,7 @@ class Omniveyor:
                     Y = starty + row * 1.5 * length
                     coord = (col if is_offset else col - 0.5, row)
                     # give a unique id to each hexagon
-                    id = count if not is_offset else count + cols - 1 - 2 * col
+                    id = count if row % 2 else count + cols - 1 - 2 * col
                     # increment total num of hexagons
                     count += 1
                     # create hexagon
