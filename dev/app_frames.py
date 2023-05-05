@@ -94,7 +94,7 @@ class PathFrame(ttk.Frame):
             column=0, row=1, sticky=(N, S, E, W)
         )
         # start point spinbox
-        self.start_spinbox = ttk.Spinbox(self, from_=0, to=9)
+        self.start_spinbox = ttk.Spinbox(self)
         self.start_spinbox.state(["readonly"])
         self.start_spinbox.grid(column=1, row=1, padx=5, pady=5, sticky=(N, S, E, W))
         # end point label
@@ -102,7 +102,7 @@ class PathFrame(ttk.Frame):
             column=0, row=2, sticky=(N, S, E, W)
         )
         # end point spinbox
-        self.end_spinbox = ttk.Spinbox(self, from_=0, to=9)
+        self.end_spinbox = ttk.Spinbox(self)
         self.end_spinbox.state(["readonly"])
         self.end_spinbox.grid(column=1, row=2, padx=5, pady=5, sticky=(N, S, E, W))
         # mode select button

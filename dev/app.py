@@ -1,5 +1,3 @@
-import cv2
-from PIL import Image, ImageTk
 from tkinter import *
 from tkinter import messagebox
 from omniveyor import Omniveyor
@@ -54,8 +52,12 @@ class App:
         self.is_manual = BooleanVar()
         self.path_text = StringVar()
         # configure button callbacks and variables
-        self.path_frame.start_spinbox.config(textvariable=self.start_pt)
-        self.path_frame.end_spinbox.config(textvariable=self.end_pt)
+        self.path_frame.start_spinbox.config(
+            textvariable=self.start_pt, from_=0, to=self.omniveyor.num_of_modules - 1
+        )
+        self.path_frame.end_spinbox.config(
+            textvariable=self.end_pt, from_=0, to=self.omniveyor.num_of_modules - 1
+        )
         self.path_frame.path_entry.config(textvariable=self.path_text)
         self.path_frame.mode_button.config(
             variable=self.is_manual, command=self.activate_manual
