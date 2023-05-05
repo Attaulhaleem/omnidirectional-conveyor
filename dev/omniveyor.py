@@ -35,7 +35,7 @@ class Omniveyor:
         for module in self.modules:
             chained_data.append(module.sr_byte)
         # first motor data must be sent last
-        chained_data.reverse()
+        # chained_data.reverse()
         # flatten list
         chained_data = [bit for byte in chained_data for bit in byte]
         self.sr_data = chained_data
