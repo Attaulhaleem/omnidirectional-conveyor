@@ -156,6 +156,6 @@ if __name__ == "__main__":
     omni = Omniveyor()
     for i in range(omni.num_of_modules):
         omni.modules[i].set_action(ACTIONS["clockwise"])
-        print(omni.modules[i].action)
+        print(omni.modules[i].sr_byte)
     omni.actuate()
     time.sleep(60)
