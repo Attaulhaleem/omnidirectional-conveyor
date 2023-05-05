@@ -54,13 +54,13 @@ class ShiftRegister:
 
 
 if __name__ == "__main__":
-    sr1 = ShiftRegister(11, 13, 15, 5)
+    sr1 = ShiftRegister(3, 5, 7, 5)
     data_list = []
     for _ in range(5):
         data_list.extend([0, 1, 1, 0, 0, 0, 0, 1])
     sr1.shift_out(data_list)
 
-    sr2 = ShiftRegister(3, 5, 7, 2)
+    sr2 = ShiftRegister(11, 13, 15, 2)
     data_list = []
     for _ in range(2):
         data_list.extend([0, 1, 1, 0, 0, 0, 0, 1])
