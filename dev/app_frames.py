@@ -65,7 +65,7 @@ class DisplayFrame(ttk.Frame):
         # info label
         ttk.Label(
             self,
-            text="Rows:\t\t3\n\nColumns:\t\t4\n\nOrientation:\tPointy Top\n\nOffset:\t\tOdd",
+            text="Rows:\t\t3\n\nColumns:\t\t3\n\nOrientation:\tPointy Top\n\nOffset:\t\tEven",
             font=BODY_FONT,
             anchor="center",
             relief="ridge",
