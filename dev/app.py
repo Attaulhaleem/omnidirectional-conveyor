@@ -10,7 +10,6 @@ from app_frames import TitleFrame, DisplayFrame, PathFrame
 class App:
     def __init__(self):
         self.omniveyor = Omniveyor()
-        self.camera_stream = CameraStream()
         self.create_frames()
         self.draw_canvas()
 
