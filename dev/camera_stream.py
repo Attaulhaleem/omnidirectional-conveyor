@@ -9,7 +9,7 @@ from picamera.array import PiRGBArray
 
 
 class CameraStream:
-    def __init__(self, label, resolution=(640, 480), framerate=30):
+    def __init__(self, label, resolution=(544, 400), framerate=30):
         self.label = label
         self.camera = PiCamera()
         self.camera.resolution = resolution
