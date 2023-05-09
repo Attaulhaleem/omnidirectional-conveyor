@@ -74,6 +74,12 @@ def get_contours_image(img):
     # Return if no contours found
     if len(contours) < 1:
         return img
+    # Return if box is not rectangular
+    for cnt in contours:
+        approx = cv2.approxPolyDP(cnt)
+        if len(approx) != 4:
+            return
+            # x, y, w, h = cv2.boundingRect(cnt)
     # Sort out the biggest contour (biggest area)
     max_area = 0
     max_index = -1
