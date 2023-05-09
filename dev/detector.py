@@ -80,6 +80,7 @@ def get_contours_image(frame):
             2,
             cv2.LINE_AA,
         )
+    return frame
 
 
 # def get_contours_image(img):
