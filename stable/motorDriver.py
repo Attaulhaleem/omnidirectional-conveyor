@@ -4,7 +4,9 @@ import motorshield
 
 motorshield.setup()
 
-data_list = motorshield.getChainedBinaryList([motorshield.CLOCKWISE for _ in range(3)])
+data_list = motorshield.getChainedBinaryList(
+    [motorshield.ANTI_CLOCKWISE for _ in range(3)]
+)
 motorshield.shiftOut(data_list)
 
 while True:
