@@ -18,8 +18,8 @@ class Omniveyor:
                 )
             )
         self.modules = [Module(positions[i]) for i in range(self.num_of_modules)]
-        self.sr1 = ShiftRegister(3, 5, 7, 7)
-        self.sr2 = ShiftRegister(11, 13, 15, 3)
+        self.sr1 = ShiftRegister(3, 5, 7, 5)
+        self.sr2 = ShiftRegister(11, 13, 15, 2)
         self.sr1.clear()
         self.sr2.clear()
         self.start = None
@@ -42,8 +42,8 @@ class Omniveyor:
         """Actuate the Omniveyor motors according to their assigned states."""
         self.update_module_actions()
         self.update_sr_data()
-        self.sr1.shift_out(self.sr_data[0:56])
-        self.sr2.shift_out(self.sr_data[32:56])
+        self.sr1.shift_out(self.sr_data[0:40])
+        self.sr2.shift_out(self.sr_data[40:56])
 
     def update_module_actions(self):
         if self.goal is None:
