@@ -43,7 +43,7 @@ class Omniveyor:
         self.update_module_actions()
         self.update_sr_data()
         self.sr1.shift_out(self.sr_data[0:32])
-        self.sr2.shift_out(self.sr_data[40:64])
+        self.sr2.shift_out(self.sr_data[32:56])
 
     def update_module_actions(self):
         if self.goal is None:
