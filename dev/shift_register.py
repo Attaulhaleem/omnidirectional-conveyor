@@ -5,7 +5,7 @@ from time import sleep
 class ShiftRegister:
     """Class for writing data to daisy-chained 74HC595 shift register(s)."""
 
-    def __init__(self, data_pin, clock_pin, latch_pin, daisy_chain, delay=0.001):
+    def __init__(self, data_pin, clock_pin, latch_pin, daisy_chain, delay=0.01):
         self.data_pin = data_pin
         self.clock_pin = clock_pin
         self.latch_pin = latch_pin
