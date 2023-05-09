@@ -160,8 +160,8 @@ if __name__ == "__main__":
     act = input("Action: ")
     omni = Omniveyor()
 
-    for module in omni.modules:
-        module.set_action(ACTIONS.get(act, ACTIONS["idle"]))
+    for i in range(5, 8):
+        omni.modules[i].set_action(ACTIONS.get(act, ACTIONS["idle"]))
 
     omni.actuate()
     time.sleep(30)
