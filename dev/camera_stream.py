@@ -2,10 +2,9 @@ import threading
 import time
 import cv2
 from PIL import Image, ImageTk
-import numpy as np
-import tkinter as tk
 from picamera import PiCamera
 from picamera.array import PiRGBArray
+import detector
 
 
 class CameraStream:
@@ -39,9 +38,10 @@ class CameraStream:
             # Convert the frame from OpenCV to a PIL ImageTk object
             image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             image_tk = ImageTk.PhotoImage(image)
+            processed = detector.get_contours_image(image_tk)
 
             # Update the label with the new image
-            self.label.configure(image=image_tk)
-            self.label.image = image_tk
+            self.label.configure(image=processed)
+            self.label.image = processed
 
         self.label.after(10, self.update_label)  # Schedule the next update
