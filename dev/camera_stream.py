@@ -36,9 +36,9 @@ class CameraStream:
         frame = self.read()
         if frame is not None:
             # Convert the frame from OpenCV to a PIL ImageTk object
-            image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-            processed = detector.get_contours_image(image)
-            image_tk = ImageTk.PhotoImage(processed)
+            processed = detector.get_contours_image(frame)
+            image = Image.fromarray(cv2.cvtColor(processed, cv2.COLOR_BGR2RGB))
+            image_tk = ImageTk.PhotoImage(image)
 
             # Update the label with the new image
             self.label.configure(image=image_tk)
