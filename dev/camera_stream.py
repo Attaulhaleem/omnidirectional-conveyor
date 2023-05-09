@@ -4,8 +4,7 @@ import cv2
 from PIL import Image, ImageTk
 from picamera import PiCamera
 from picamera.array import PiRGBArray
-
-# import detector
+import detector
 
 
 class CameraStream:
@@ -37,8 +36,8 @@ class CameraStream:
         frame = self.read()
         if frame is not None:
             # Convert the frame from OpenCV to a PIL ImageTk object
-            # processed = detector.get_contours_image(frame)
-            image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+            processed = detector.get_contours_image(frame)
+            image = Image.fromarray(cv2.cvtColor(processed, cv2.COLOR_BGR2RGB))
             image_tk = ImageTk.PhotoImage(image)
 
             # Update the label with the new image
