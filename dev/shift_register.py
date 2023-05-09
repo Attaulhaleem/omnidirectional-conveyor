@@ -27,7 +27,6 @@ class ShiftRegister:
 
     def shift_out(self, data_list):
         """MSB first shift out and latch data to shift register(s)."""
-        sleep(0.5)
         # 1st bit in data_list is sent first
         # reverse to send LSB first
         data_list.reverse()
