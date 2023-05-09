@@ -71,6 +71,9 @@ def get_contours_image(img):
     retval, bin = cv2.threshold(gray, 100, 255, cv2.THRESH_BINARY)
     # Find contours
     contours, hierarchy = cv2.findContours(bin, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    # Return if no contours found
+    if len(contours) < 1:
+        return img
     # Sort out the biggest contour (biggest area)
     max_area = 0
     max_index = -1
