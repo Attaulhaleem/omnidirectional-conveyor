@@ -15,7 +15,7 @@ THe simulation in Webots consisting of 10 modules is shown below.
 The CAD model of hardware is shown below.
 
 <p align="center">
-  <img width="75%" src="https://github.com/Attaulhaleem/fyp/blob/main/docs/CAD" alt="CAD Model">
+  <img width="75%" src="https://github.com/Attaulhaleem/fyp/blob/main/docs/CAD.png" alt="CAD Model">
 </p>
 
 A top-view of the real hardware is shown.
