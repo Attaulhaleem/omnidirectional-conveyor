@@ -7,4 +7,4 @@ This project was my Final Year Design Project for BS Electronics Engineering at 
 ## Simulation
 THe simulation in Webots consisting of 10 modules is shown below.
 
-![Simulation in Webots](http://github.com/attaulhaleem/fyp/docs/Simulation.gif)
+![Simulation in Webots](https://github.com/Attaulhaleem/fyp/blob/main/docs/Simulation.gif)
