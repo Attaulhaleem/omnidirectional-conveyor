@@ -11,3 +11,9 @@ THe simulation in Webots consisting of 10 modules is shown below.
   <img width="75%" src="https://github.com/Attaulhaleem/fyp/blob/main/docs/Simulation.gif" alt="Simulation in Webots">
 </p>
 
+## GUI
+The Graphical User Interface (GUI) has options for specifying the package destination using coordinates and mouse input. Buttons are also available for drawing and traversing the shortest path. A live feed shows the top-view of the Pi Camera module giving an overview of the conveyor.
+
+<p align="center">
+  <img width="75%" src="https://github.com/Attaulhaleem/fyp/blob/main/docs/GUI.png" alt="Graphical User Interace (GUI)">
+</p>
